@@ -1,0 +1,160 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>VOLPES - Tutorials</title>
+    <meta name="description" content="Tutorial page for the VOLPES tool">
+    <meta name="application-name" content="VOLPES">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="img/icon/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/icon/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/icon/favicon-16x16.png?v=2">
+    <link rel="manifest" href="img/icon/site.webmanifest?v=2">
+    <link rel="mask-icon" href="img/icon/safari-pinned-tab.svg?v=2" color="#5bbad5">
+    <link rel="shortcut icon" href="img/icon/favicon.ico?v=2">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="msapplication-config" content="img/icon/browserconfig.xml?v=2">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/interface.css"> 
+    <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.0/dist/bootstrap-toc.min.css">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+    <style> /*Font specification */
+    </style>
+
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.0/dist/bootstrap-toc.min.js"></script>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNavDropdown">
+            <a class="navbar-brand" href="index.html">
+                <span style="float: left; display: block;"><img src="img/icon/android-chrome-192x192.png" style="border-width:0px; height: 32px;" /></span>
+                <span style="float: left; display: block; padding: 4px 0 0 0;">VOLPES</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="app.html">App<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Examples
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="examples/hydrophobicity.html">protein hydrophobicity profile</a>
+                        <a class="dropdown-item" href="examples/cognate.html">cognate mRNA/protein pair</a>
+                        <a class="dropdown-item" href="examples/charge.html">pH dependence of protein charge</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Tutorial</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="documentation.html">Documentation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <nav id="toc" data-toggle="toc" class="sticky-top" style="z-index: 1;"></nav>
+            </div>
+            <div class="col-sm-9">
+                <h2 class="mt-5 text-center">Tutorials</h2>
+                <p>On this page, several tutorials are listed explaining the usage of VOLPES through several hands-on examples that can be followed along using the app itself. The tutorial examples are ordered roughly according to increasing difficulty and complexity, but can be read in any order.</p>
+                <h3 class="text-center">Comparing two hydrophobicity scales</h3>
+                <h4>Step 1</h4>
+                <p>When starting an analysis, the user is greeted with a nearly empty page showing a single button, asking the user to run an analysis. Clicking this button opens up the Settings menu to start defining a sequence and the parameters for analysis.</p>
+                <img class="tutorial-img" src="img/tutorial/step0001.png">
+                <h4>Step 2</h4>
+                <p>The opened Options dialogue shows several tabs that guide the user through data submission process in a meaningful order. First sequence data is defined. This is followed by the definition of the scale used and finally the visual style is set.</p>
+                <img class="tutorial-img" src="img/tutorial/step0002.png">
+                <h4>Step 3</h4>
+                <p>Sequence information can be provided in multiple ways: as a raw string of one letter encodeda amino acids or bases, as a FASTA formatted text file or by using the ID of a public sequence database. For this example, the latter option is chosen. First, the type of polymer is defined - in this case a protein sequence.</p>
+                <img class="tutorial-img" src="img/tutorial/step0003.png">
+                <h4>Step 4</h4>
+                <p>In the next step, the database is chosen. Two large public sequence databases are supported currently: the Uniprot<sup><a href="https://www.uniprot.org/">1</a></sup> for proteins and the European Nucleotide Archive (ENA)<sup><a href="https://www.ebi.ac.uk/ena">2</a></sup> for RNA sequences. This tutorial example, uses a protein sequence deposited in the Uniprot database, therefore we pick the corresponding option.</p>
+                <img class="tutorial-img" src="img/tutorial/step0004.png">
+                <h4>Step 5</h4>
+                <p>To access a deposited sequence, the ID is simply inserted into the input field provided and the <i>Go</i> button to the right is clicked.</p>
+                <img class="tutorial-img" src="img/tutorial/step0005.png">
+                <h4>Step 6</h4>
+                <p>Once a sequence ID is submitted, the data is automatically retrieved from the specified server. The sequence itself is inserted in the text-editor that allows for further modification of the sequence and a success message is displayed mentioning the name of the protein sequence. The <i>Clear</i> button to the left of the <i>Done</i> button allows for deletion of all specified data.</p>
+                <img class="tutorial-img" src="img/tutorial/step0006.png">
+                <h4>Step 7</h4>
+                <p>Once the sequence is loaded, the first step is done. Next a property of interest needs to be selected. To do this the <i>Scale</i> tab is clicked.</p>
+                <img class="tutorial-img" src="img/tutorial/step0007.png">
+                <h4>Step 8</h4>
+                <p>Within the <i>Scale</i> tab a dropdown-menu is found that allows to prefilter the scales in a coarse way. This is necessary since over 600 different property scales are supplied with the tool. In our case, we want to compare the hydrophobic pattern as defined by two different scales and, therefore, only the <i>Hydrophobicity</i> option is selected. This filter allows for multiple classes to be selected.</p>
+                <img class="tutorial-img" src="img/tutorial/step0008.png">
+                <h4>Step 9</h4>
+                <p>Once one or more classes are selected, the menu gets populated with all scales fitting the selected class(es). They are listed using their AAindex ID<sup><a href="https://www.genome.jp/aaindex/">3</a></sup> if available or a descriptive name otherwise. First, a very popular scale, the <i>Kyte-Doolittle Hydropathy index</i>, is selected. Immediately, the data on the right gets updated showing the name, a link to the AAindex (if applicable), the numerical entries of the scale, a short description and a citation for the original publication, including a link to the Pubmed if available.<sup><a href="https://www.ncbi.nlm.nih.gov/pubmed/">4</a></sup></p>
+                <img class="tutorial-img" src="img/tutorial/step0009.png">
+                <h4>Step 10</h4>
+                <p>For now, the visual parameters are kept at their default values and the resulting profile is investigated. To do that, the pop-up is simply closed using either the close button on the top-right or by clicking somewhere outside the pop-up. A distinct hydrophobic profile can be observed showing positive values at the N-terminus of the sequence and the most negative region closer towards the C-terminus of the protein.</p>
+                <img class="tutorial-img" src="img/tutorial/step0010.png">
+                <h4>Step 11</h4>
+                <p>To be able to compare two different scales, the same sequence is added a second time using <i>Add additional sequence</i> button. Steps 2 to 8 are repeated again using the Uniprot ID  <i>P16043</i> to download the sequence of Somatoliberin from the Uniprot database.</p>
+                <img class="tutorial-img" src="img/tutorial/step0011.png">
+                <h4>Step 12</h4>
+                <p>This time another well-known hydrophobicity scale is used: the <i>Consensus normalized hydrophobicity</i> scale by Eisenberg et. al. Already at this step a difference in absolute values between the two scales can be observed in the description of the scale.</p>
+                <img class="tutorial-img" src="img/tutorial/step0012.png">
+                <h4>Step 13</h4>
+                <p>Once the second dataset is defined, the resulting plot can be investigated. While the profiles suggest little similarity, the pairwise Pearson correlation coefficient R between them is 0.98, suggesting a very high correlation. This can happen if two scales are reporting their properties in correlated, but largely different units.</p>
+                <img class="tutorial-img" src="img/tutorial/step0013.png">
+                <h4>Step 14</h4>
+                <p>To test whether the difference between the two curves can be purely attributed to differences in units used by the scale authors, we can normalize the profiles by their standard deviation. To do so, we click the <i>Settings</i> button in the top menu bar.</p>
+                <img class="tutorial-img" src="img/tutorial/step0014.png">
+                <h4>Step 15</h4>
+                <p>In the settings menu the <i>Relative Units</i> switch is flipped to on, this recalculates the profiles and reports them in units of their own standard deviation. The other options allows one to invert the y-axes, which can be useful if one compares properties that are reported in inverted units.</p>
+                <img class="tutorial-img" src="img/tutorial/step0015.png">
+                <h4>Step 16</h4>
+                <p>Once the settings menu is closed, the similarities between the two profiles for Somatoliberin using two different hydrophobicity metrics are obvious. The differences between the two scales used seem to be very local in nature with the global shape staying intact.</p>
+                <img class="tutorial-img" src="img/tutorial/step0016.png">
+                <p>This example illustrates a simple task performed using VOLPES, of course VOLPES can do much more than what is described above, but this should be enough to get you started!</p>
+                
+                
+                <h3 class="text-center">Aligning alternative splicing variants</h3>
+                <h4>Step 1</h4>
+                <p>We start by adding the first protein sequence <i>Armadillo repeat-containing protein 10</i> using the Uniprot ID Q8N2F6-1. Note that the "-1" indicates a splicing isoform, in this case we selected the canonical sequence.</p>
+                <img class="tutorial-img" src="img/tutorial/step0101.png">
+                <h4>Step 2</h4>
+                <p>For this example we want to compare the variants based on hydrophobicity - therefore we choose the <i>FAC1</i> scale. Factor 1 is a consensus hydrophobicity scale derived by multivariate statistical analysis of a set of 500 different property scales.</p>
+                <img class="tutorial-img" src="img/tutorial/step0102.png">
+                <h4>Step 3</h4>
+                <p>Next we add a splicing variant using the Uniprot ID Q8N2F6-2. To do this we repeat steps 1-2 using the second ID. This time we want to make sure the alternative sequence stands out in the plot. To achieve that we switch to the <i>Visuals</i> tab and change the Linetype to a style of our choice, in this example: <i>Dashed 2</i>.</p>
+                <img class="tutorial-img" src="img/tutorial/step0103.png">
+                <h4>Step 4</h4>
+                <p>The similarity between the two sequences is not immediately obvious, neither by the plot nor by the Pearson or Spearman correlation coefficients displayed in the lower right tab.</p>
+                <img class="tutorial-img" src="img/tutorial/step0104.png">
+                <h4>Step 5</h4>
+                <p>To make sure that we are not missing anything we start sliding the profiles against each other by using the <i>Shift</i> slider of the second sequence. To fine tune the shift the + and - buttons next to slider can also be used. When reaching an offset of 35 residues the similarity between the two variants becomes very obvious. A look at the correlation tab confirms that these sequences are highly similar.</p>
+                <img class="tutorial-img" src="img/tutorial/step0105.png">
+                <p>Using the tools provided by VOLPES we could quickly and easily find the overlapping regions for these two splicing isoforms.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

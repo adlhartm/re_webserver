@@ -1,0 +1,108 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>VOLPES</title>
+    <meta name="description" content="Visualization of physicochemical sequences">
+    <meta name="application-name" content="VOLPES">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="img/icon/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/icon/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/icon/favicon-16x16.png?v=2">
+    <link rel="manifest" href="img/icon/site.webmanifest?v=2">
+    <link rel="mask-icon" href="img/icon/safari-pinned-tab.svg?v=2" color="#5bbad5">
+    <link rel="shortcut icon" href="img/icon/favicon.ico?v=2">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="msapplication-config" content="img/icon/browserconfig.xml?v=2">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/interface.css"> 
+
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNavDropdown">
+            <a class="navbar-brand" href="#">
+                <span style="float: left; display: block;"><img src="img/icon/android-chrome-192x192.png" style="border-width:0px; height: 32px;" /></span>
+                <span style="float: left; display: block; padding: 4px 0 0 0;">VOLPES</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="app.html">App<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Examples
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="examples/hydrophobicity.html">protein hydrophobicity profile</a>
+                        <a class="dropdown-item" href="examples/cognate.html">cognate mRNA/protein pair</a>
+                        <a class="dropdown-item" href="examples/charge.html">pH dependence of protein charge</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="tutorial.html">Tutorial</a>
+                </li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="documentation.html">Documentation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">About</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="mt-5 text-center">Welcome to VOLPES!</h1>
+                <p class="lead text-center">A tool to visualize physicochemical sequence properties of biological macromolecules.</p>
+                <h5 class="text-center">
+                    <u>v</u>isua<u>l</u>izati<u>o</u>n of <u>p</u>hysicoch<u>e</u>mical <u>s</u>equence properties: VOLPES
+                </h5>
+                <p style="text-align: justify;">
+                    Structure, dynamics and, ultimately, biological function of proteins and nucleic acids are determined by the physicochemical properties of their primary sequences. Such properties are frequently captured via one-dimensional profile plots depicting a given physicochemical variable as a function of sequence position. Here, we present VOLPES, a user-friendly webserver and the associated JavaScript library that enable a fully interactive, multifunctional visualization, analysis and comparison of the physicochemical properties of protein and nucleic-acid sequences, allowing unprecedented insight into raw sequence data and creating a starting point for further in-depth exploration. Over 600 different amino acid and nucleobase properties are available through the interface (many sourced from the AAIndex <a href="https://www.genome.jp/aaindex/">[1]</a>) to get your analysis started right away.
+                </p>
+                <p class="text-center"><a class="btn btn-blue" href="app.html" role="button" style="margin: 1em 0em 1em 0em;">Start the analysis!</a></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <h3 class="text-center">
+                    Tutorial
+                </h3>
+                <p style="text-align: justify;">
+                    Are you a new user or a returning user who wants some additional instructions? We set up a tutorial page for you explaining the usage of VOLPES in detail.   
+                </p>
+                <p class="text-center"><a class="btn btn-outline-secondary" href="tutorial.html" role="button" style="margin: 1em 0em 1em 0em;">To the tutorial</a></p>
+            </div>
+            <div class="col-lg-6">
+                <h3 class="text-center">
+                    Examples
+                </h3>
+                <p style="text-align: justify;">
+                    Fancy a real-world illustration of VOLPES in action? Check out these interactive examples, play around and get a feel for what this tool is all about!
+                </p>
+                <p class="text-center"><a class="btn btn-outline-secondary" href="examples/hydrophobicity.html" role="button" style="margin: 1em 0em 1em 0em;">Try it out</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

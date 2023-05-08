@@ -1,0 +1,279 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#0088DB"/>
+
+    <title>VOLPES - Charge</title>
+    <meta name="description" content="Charge profile example for the VOLPES tool">
+    <meta name="application-name" content="VOLPES">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/icon/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/icon/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="../img/icon/favicon-16x16.png?v=2">
+    <link rel="manifest" href="../img/icon/site.webmanifest?v=2">
+    <link rel="mask-icon" href="../img/icon/safari-pinned-tab.svg?v=2" color="#5bbad5">
+    <link rel="shortcut icon" href="../img/icon/favicon.ico?v=2">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="msapplication-config" content="../img/icon/browserconfig.xml?v=2">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="../css/bootstrap-slider.min.css" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+    <style> /*Font specification */
+        @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:500');
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../css/volpini.css">
+    <link rel="stylesheet" type="text/css" href="../css/interface.css">
+    
+
+
+
+</head>
+
+<body>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="../js/d3/d3.min.js"></script>
+    <script src="../js/bootstrap-slider.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="../js/jscolor.js"></script>
+    <script src="../js/spearson.js"></script>
+    <script src="../js/volpiniLib.js"></script>
+    <script src="../js/scaleProperties.js"></script>
+    <script src="../js/scaleDescriptions.js"></script>
+    <!-- <script src="../js/affLib.js"></script>
+    <script src="../js/profile-lib.js"></script>
+    <script src="../js/scales.js"></script>
+    <script src="../js/aaindex.js"></script> -->
+    <script src="../js/FileSaver.min.js"></script>
+    <script src="../js/saveSvgAsPng.js"></script>
+
+    <!-- TODO: replace imports in the future with a minified version saved locally -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stackblur-canvas/1.4.1/stackblur.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
+
+    <!-- <canvas id="canv" width="1px" height="1px" visibility="hidden"></canvas>  -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+    <script src="../js/browser_warning.js"></script>
+
+    <div class="layout-example">
+        <div class="left-boundary"></div>
+        <div class="right-boundary"></div>
+        <div class="top-boundary">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNavDropdown">
+                    <a class="navbar-brand" href="../index.html">
+                        <span style="float: left; display: block;"><img src="../img/icon/android-chrome-192x192.png" style="border-width:0px; height: 32px;" /></span>
+                        <span style="float: left; display: block; padding: 4px 0 0 0;">VOLPES</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../app.html">App</a>
+                        </li>
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Examples
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="hydrophobicity.html">protein hydrophobicity profile</a>
+                                <a class="dropdown-item" href="cognate.html">cognate mRNA/protein pair</a>
+                                <a class="dropdown-item" href="charge.html">pH dependence of protein charge</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../tutorial.html">Tutorial</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../documentation.html">Documentation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../about.html">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="canvas-container">
+            <div style="text-align: center; vertical-align: top;" id="SVGholder">
+                <svg class="canvas" id="profileDrawing" width="720" height="330"></svg>
+            </div>
+        </div>
+        <div class="description-container">
+            <h4>pH dependent charge profiles</h4>
+            <p>Charge profiles of the yeast ATPase GET3 at pH 4 (<span style="color: #df9a8c;">red</span>) to pH 10 (<span style="color: #2c6b96;">blue</span>) in steps of pH 1. The change in charge from a weakly positively charged protein in an acidic environment to a strongly negatively charged protein in a basic environment is clearly visible. In addition to identifying the total charge, profile visualization allows one to identify sequence regions that exhibit a more pronounced change in charge.</p>
+            <p><i>Note: this example shows the minimal setup for a graph using the VOLPES library - utilizing just an SVG element, a data object and a single call to the drawingProfiles() function.</i></p>
+            <p>Data: Uniprot ID <a href="https://www.uniprot.org/uniprot/Q12154">Q12154</a></p>
+            <span style="float: left;"><a href="cognate.html">&larr; Previous Example</a></span>
+        </div>
+        <div class="bottom-container">
+        </div>
+        <div class="middle-container">
+        </div>
+        <div class="footer-container">
+        </div>
+    </div>
+
+</body>
+<!-- <script src="../js/profile_helper.js"></script> -->
+<script src="../js/volpini.js"></script>
+<script type="text/javascript">
+    data = {
+      "seq" : [],
+      "title" : "test",
+
+    };
+    corList = {};
+</script>
+<script type="text/javascript">
+    data = {
+        "seq": [
+            {
+                "type": "protein",
+                "scale": "charge_pH4",
+                "sequence": "MDLTVEPNLHSLITSTTHKWIFVGGKGGVGKTTSSCSIAIQMALSQPNKQFLLISTDPAHNLSDAFGEKFGKDARKVTGMNNLSCMEIDPSAALKDMNDMAVSRANNNGSDGQGDDLGSLLQGGALADLTGSIPGIDEALSFMEVMKHIKRQEQGEGETFDTVIFDTAPTGHTLRFLQLPNTLSKLLEKFGEITNKLGPMLNSFMGAGNVDISGKLNELKANVETIRQQFTDPDLTTFVCVCISEFLSLYETERLIQELISYDMDVNSIIVNQLLFAENDQEHNCKRCQARWKMQKKYLDQIDELYEDFHVVKMPLCAGEIRGLNNLTKFSQFLNKEYNPITDGKVIYELEDKE",
+                "window": 31,
+                "shift": 0,
+                "smoothing_method": "boxcar",
+                "name": "ATPase GET3 - pH 4",
+                "organism": "S. cerevisiae",
+                "thickness": 2,
+                "color": "#df9a8c",
+                "active": true,
+                "visible": true,
+                "profile": []
+            },
+            {
+                "type": "protein",
+                "scale": "charge_pH5",
+                "sequence": "MDLTVEPNLHSLITSTTHKWIFVGGKGGVGKTTSSCSIAIQMALSQPNKQFLLISTDPAHNLSDAFGEKFGKDARKVTGMNNLSCMEIDPSAALKDMNDMAVSRANNNGSDGQGDDLGSLLQGGALADLTGSIPGIDEALSFMEVMKHIKRQEQGEGETFDTVIFDTAPTGHTLRFLQLPNTLSKLLEKFGEITNKLGPMLNSFMGAGNVDISGKLNELKANVETIRQQFTDPDLTTFVCVCISEFLSLYETERLIQELISYDMDVNSIIVNQLLFAENDQEHNCKRCQARWKMQKKYLDQIDELYEDFHVVKMPLCAGEIRGLNNLTKFSQFLNKEYNPITDGKVIYELEDKE",
+                "window": 31,
+                "shift": 0,
+                "smoothing_method": "boxcar",
+                "name": "ATPase GET3 - pH 5",
+                "organism": "S. cerevisiae",
+                "thickness": 2,
+                "color": "#e6b6ac",
+                "active": true,
+                "visible": true,
+                "profile": []
+            },
+            {
+                "type": "protein",
+                "scale": "charge_pH6",
+                "sequence": "MDLTVEPNLHSLITSTTHKWIFVGGKGGVGKTTSSCSIAIQMALSQPNKQFLLISTDPAHNLSDAFGEKFGKDARKVTGMNNLSCMEIDPSAALKDMNDMAVSRANNNGSDGQGDDLGSLLQGGALADLTGSIPGIDEALSFMEVMKHIKRQEQGEGETFDTVIFDTAPTGHTLRFLQLPNTLSKLLEKFGEITNKLGPMLNSFMGAGNVDISGKLNELKANVETIRQQFTDPDLTTFVCVCISEFLSLYETERLIQELISYDMDVNSIIVNQLLFAENDQEHNCKRCQARWKMQKKYLDQIDELYEDFHVVKMPLCAGEIRGLNNLTKFSQFLNKEYNPITDGKVIYELEDKE",
+                "window": 31,
+                "shift": 0,
+                "smoothing_method": "boxcar",
+                "name": "ATPase GET3 - pH 6",
+                "organism": "S. cerevisiae",
+                "thickness": 2,
+                "color": "#ebd2cc",
+                "active": true,
+                "visible": true,
+                "profile": []
+            },
+            {
+                "type": "protein",
+                "scale": "charge_pH7",
+                "sequence": "MDLTVEPNLHSLITSTTHKWIFVGGKGGVGKTTSSCSIAIQMALSQPNKQFLLISTDPAHNLSDAFGEKFGKDARKVTGMNNLSCMEIDPSAALKDMNDMAVSRANNNGSDGQGDDLGSLLQGGALADLTGSIPGIDEALSFMEVMKHIKRQEQGEGETFDTVIFDTAPTGHTLRFLQLPNTLSKLLEKFGEITNKLGPMLNSFMGAGNVDISGKLNELKANVETIRQQFTDPDLTTFVCVCISEFLSLYETERLIQELISYDMDVNSIIVNQLLFAENDQEHNCKRCQARWKMQKKYLDQIDELYEDFHVVKMPLCAGEIRGLNNLTKFSQFLNKEYNPITDGKVIYELEDKE",
+                "window": 31,
+                "shift": 0,
+                "smoothing_method": "boxcar",
+                "name": "ATPase GET3 - pH 7",
+                "organism": "S. cerevisiae",
+                "thickness": 2,
+                "color": "#eeeeee",
+                "active": true,
+                "visible": true,
+                "profile": []
+            },
+            {
+                "type": "protein",
+                "scale": "charge_pH8",
+                "sequence": "MDLTVEPNLHSLITSTTHKWIFVGGKGGVGKTTSSCSIAIQMALSQPNKQFLLISTDPAHNLSDAFGEKFGKDARKVTGMNNLSCMEIDPSAALKDMNDMAVSRANNNGSDGQGDDLGSLLQGGALADLTGSIPGIDEALSFMEVMKHIKRQEQGEGETFDTVIFDTAPTGHTLRFLQLPNTLSKLLEKFGEITNKLGPMLNSFMGAGNVDISGKLNELKANVETIRQQFTDPDLTTFVCVCISEFLSLYETERLIQELISYDMDVNSIIVNQLLFAENDQEHNCKRCQARWKMQKKYLDQIDELYEDFHVVKMPLCAGEIRGLNNLTKFSQFLNKEYNPITDGKVIYELEDKE",
+                "window": 31,
+                "shift": 0,
+                "smoothing_method": "boxcar",
+                "name": "ATPase GET3 - pH 8",
+                "organism": "S. cerevisiae",
+                "thickness": 2,
+                "color": "#b1c0d0",
+                "active": true,
+                "visible": true,
+                "profile": []
+            },
+            {
+                "type": "protein",
+                "scale": "charge_pH9",
+                "sequence": "MDLTVEPNLHSLITSTTHKWIFVGGKGGVGKTTSSCSIAIQMALSQPNKQFLLISTDPAHNLSDAFGEKFGKDARKVTGMNNLSCMEIDPSAALKDMNDMAVSRANNNGSDGQGDDLGSLLQGGALADLTGSIPGIDEALSFMEVMKHIKRQEQGEGETFDTVIFDTAPTGHTLRFLQLPNTLSKLLEKFGEITNKLGPMLNSFMGAGNVDISGKLNELKANVETIRQQFTDPDLTTFVCVCISEFLSLYETERLIQELISYDMDVNSIIVNQLLFAENDQEHNCKRCQARWKMQKKYLDQIDELYEDFHVVKMPLCAGEIRGLNNLTKFSQFLNKEYNPITDGKVIYELEDKE",
+                "window": 31,
+                "shift": 0,
+                "smoothing_method": "boxcar",
+                "name": "ATPase GET3 - pH 9",
+                "organism": "S. cerevisiae",
+                "thickness": 2,
+                "color": "#7494b3",
+                "active": true,
+                "visible": true,
+                "profile": []
+            },
+            {
+                "type": "protein",
+                "scale": "charge_pH10",
+                "sequence": "MDLTVEPNLHSLITSTTHKWIFVGGKGGVGKTTSSCSIAIQMALSQPNKQFLLISTDPAHNLSDAFGEKFGKDARKVTGMNNLSCMEIDPSAALKDMNDMAVSRANNNGSDGQGDDLGSLLQGGALADLTGSIPGIDEALSFMEVMKHIKRQEQGEGETFDTVIFDTAPTGHTLRFLQLPNTLSKLLEKFGEITNKLGPMLNSFMGAGNVDISGKLNELKANVETIRQQFTDPDLTTFVCVCISEFLSLYETERLIQELISYDMDVNSIIVNQLLFAENDQEHNCKRCQARWKMQKKYLDQIDELYEDFHVVKMPLCAGEIRGLNNLTKFSQFLNKEYNPITDGKVIYELEDKE",
+                "window": 31,
+                "shift": 0,
+                "smoothing_method": "boxcar",
+                "name": "ATPase GET3 - pH 10",
+                "organism": "S. cerevisiae",
+                "thickness": 2,
+                "color": "#2c6b96",
+                "active": true,
+                "visible": true,
+                "profile": []
+            }
+            
+        ],
+        "title": "test",
+        "relative" : false,
+        "y1_reverse" : false,
+        "y2_reverse" : true,
+        "cor_method" : {
+            "upper" : "pearson",
+            "lower" : "spearman"}
+    }
+    
+    drawingProfiles(data);
+
+
+</script>
+<script src="../js/loadFunctions.js"></script>
+
+</html>

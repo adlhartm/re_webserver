@@ -1,0 +1,58 @@
+ .axisRed line {
+    stroke: tomato;
+}
+
+.axisRed path {
+    stroke: tomato;
+}
+
+.axisRed text {
+    fill: black;
+}
+.axisBlue line {
+    stroke: steelblue;
+}
+
+.axisBlue path {
+    stroke: steelblue;
+}
+
+.axisBlue text {
+    fill: black;
+}
+.axisBlack line {
+    stroke: black;
+}
+
+.axisBlack path {
+    stroke: black;
+}
+
+.axisBlack text {
+    fill: black;
+}
+line.gridLine {
+    stroke: lightgrey;
+}
+.tick text {
+   font-size: 14px; 
+}
+.axis text {
+   font-size: 14px; 
+}
+.btn-sq-xs{
+  width: 25px !important;
+  height: 25px !important;
+  padding: 0px;
+}
+#shift .slider-selection {
+  background: #AAAAAA;
+}
+
+.slider-selection {
+  background: #AAAAAA;
+}
+
+.label {
+  font-size: 14px;
+}

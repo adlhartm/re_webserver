@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#0088DB"/>
+
+    <title>VOLPES - Documentation</title>
+    <meta name="description" content="Documentation page for the VOLPES tool">
+    <meta name="application-name" content="VOLPES">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="img/icon/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/icon/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/icon/favicon-16x16.png?v=2">
+    <link rel="manifest" href="img/icon/site.webmanifest?v=2">
+    <link rel="mask-icon" href="img/icon/safari-pinned-tab.svg?v=2" color="#5bbad5">
+    <link rel="shortcut icon" href="img/icon/favicon.ico?v=2">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="msapplication-config" content="img/icon/browserconfig.xml?v=2">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="css/bootstrap-slider.min.css" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.0/dist/bootstrap-toc.min.css">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+    <style> /*Font specification */
+        @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:500');
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="css/volpini.css">
+    <link rel="stylesheet" type="text/css" href="css/interface.css">
+    <link rel="stylesheet" type="text/css" href="css/doc-interface.css">
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.0/dist/bootstrap-toc.min.js"></script>
+    <script src="js/d3/d3.min.js"></script>
+    <script src="js/bootstrap-slider.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="js/jscolor.js"></script>
+    <script src="js/spearson.js"></script>
+    <script src="js/affLib.js"></script>
+    <script src="js/profile-lib.js"></script>
+    <script src="js/scales.js"></script>
+    <script src="js/aaindex.js"></script>
+    <script src="js/FileSaver.min.js"></script>
+    <script src="js/saveSvgAsPng.js"></script>
+
+    <!-- TODO: replace imports in the future with a minified version saved locally -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stackblur-canvas/1.4.1/stackblur.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
+
+    <link rel="stylesheet" href="css/styles/tomorrow.css">
+    <script src="js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <script src="js/browser_warning.js"></script>
+
+    <!-- <canvas id="canv" width="1px" height="1px" visibility="hidden"></canvas>  -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+
+    <style>
+        body {
+            position: relative;
+        }
+    </style>
+</head>
+
+<body data-spy="scroll" data-target="#toc">
+    
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNavDropdown">
+                <a class="navbar-brand" href="index.html">
+                    <span style="float: left; display: block;"><img src="img/icon/android-chrome-192x192.png" style="border-width:0px; height: 32px;" /></span>
+                    <span style="float: left; display: block; padding: 4px 0 0 0;">VOLPES</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="app.html">App<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Examples
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="examples/hydrophobicity.html">protein hydrophobicity profile</a>
+                            <a class="dropdown-item" href="examples/cognate.html">cognate mRNA/protein pair</a>
+                            <a class="dropdown-item" href="examples/charge.html">pH dependence of protein charge</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tutorial.html">Tutorial</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Documentation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <nav id="toc" data-toggle="toc" class="sticky-top" style="z-index: 1;"></nav>
+            </div>
+            <div class="col-sm-9">
+                <!-- <h1 class="page-header" id="table-of-contents-plugin-for-bootstrap">Documentation</h1> -->
+                        
+                <h2>Components</h2>
+                <p>The VOLPES application comes in two main parts: the drawing functionality and the generated interface. These are currently not split into multiple, separated files, but should be soon.</p>
+
+                <h3>Drawing</h3>
+                <p>To draw any profile, an SVG element needs to be provided as canvas and a correctly formatted data object to define the drawing.</p>
+                
+                <pre><code class="html">
+    &lt;svg class=&quot;canvas&quot; width=&quot;1050&quot; height=&quot;330&quot;&gt;&lt;/svg&gt;</code></pre>
+
+                <p>The height and width can be chosen nearly arbitrarily, with the only limitation being that the axes need to fit within the area provided.</p>
+                
+                <pre><code class="js">
+    data = { "seq" : [
+        {
+            "type" : string,
+            "scale" : string,
+            "sequence" : string,
+            "windonw" : int,
+            "shift" : int,
+            "smoothing_method" : string,
+            "name" : string,
+            "organism" : string (optional),
+            "thickness" : float,
+            "color" : rgb_hex_string,
+            "active" : bool
+        }],
+        "title" : string (optional)
+    }</code></pre>
+
+                <p>Given a <i>data</i> object, a saved representation can be drawn at anytime:</p>
+
+                <pre><code class="js">
+    drawingProfiles(data, id = ".canvas")</code></pre>
+
+                <p>An SVG element classed <i>canvas</i> is selected by default, but any selector can be provided, allowing one to draw multiple graphs on a single page. To interactively change the displayed graph, modify the data object by any means and call <i>drawingProfiles(data, id)</i> at anytime, the graph should be updated.</p>
+
+
+                <h3>Interface</h3>
+                <p>In addition to a drawing library, a functionality that generates interfaces to interact with the <i>data</i> object is provided. This is still being developed and may change by final release. To add a simple interface box for a single sequence including an interface for sliding sequences against each other, changing the smoothing window size, the scale used, the color or the primary sequence data, use the addInterface function:</p>
+                
+                <pre><code class="js">
+    addInterface()</code></pre>
+                    
+                <p>This function modifies the current state of the <i>data</i> object and adds entries to it. It is aware of the current status of the <i>data</i> object, but currently does not support multiple objects. Therefore, it should not be used in conjunction with multiple SVG canvases to draw on.</p>
+                <p>If a <i>data</i> object has been created by other means and only the interactivity of the interface is needed, interface elements can also be created based on a <i>data</i> JSON object:</p>
+
+                <pre><code class="js">
+    addInterfaceBasedOnData(data)</code></pre>
+
+                <p>This function does not modify the current state of the provided <i>data</i> object, although the created interface elements are able to do so.</p>
+
+                <h4>Primary sequence and databases</h4>
+                <p>NOTE: Currently all database connectivity is tied to the default interface - this will be changed in the future to allow this connectivity in custom interfaces.</p>
+                <p>The default interface supports several ways of specifying primary sequence data for each entry. The textbox allows for a primary sequence to be supplied as a one-letter-code string either as just the sequence or fasta formatted. Furthermore, parsers for two central databases are implemented: UniProt for protein sequences and the European Nucleotide Archive (ENA) for RNA sequences.</p>
+
+                <h2>Customization</h2>
+                <h3>Scales</h3>
+                <p>With the application, a database of 600 different protein property scales coming from the scientific literature is already included. These scales are stored in the <i>scale</i> and <i>scaleDescriptors</i> objects, respectively. To add further scales, they need to be registered in both of these objects. Protein scales are stored in <i>scale.protein</i>:</p>
+
+                <pre><code class="js">
+    "WIMW960101": {
+        "A": 4.08, "C": 4.49, "D": 3.02, "E": 2.23, "F": 5.38,
+        "G": 4.24, "H": 4.08, "I": 4.52, "K": 3.77, "L": 4.81,
+        "M": 4.48, "N": 3.83, "P": 3.8,  "Q": 3.67, "R": 3.91,
+        "S": 4.12, "T": 4.11, "V": 4.18, "W": 6.1,  "Y": 5.19
+    }</code></pre>
+                <p>The key used to define a scale is the same used in the scale attribute of the <i>data</i> object. To provide descriptions for a scale each should also be registered in <i>scaleDescriptors.protein</i>:</p>
+
+                <pre><code class="js">
+    "WIMW960101": {
+        "PMID": "8836100",               // Pubmed ID (optional)
+        "aaIndexID": "WIMW960101",       // AAindex ID (optional)
+        "author": "Wimley, W.C. and White, S.",
+        "journal": "Nature Structual biol. 3, 842-848 (1996)",
+        "name": "Free energies of transfer of AcWl-X-LL peptides from bilayer interface to water (Wimley-White, 1996)",
+        "summary": "Experimentally determined hydrophobicity scale for proteins at membrane interfaces"
+    }</code></pre>
+                <p>RNA scales need to be defined in both the <i>scale.rna</i> and <i>scaleDescriptors.rna</i> objects. While the structure of a description is identical to a protein scale, the scale itself uses different keys. For example, one can define a purine composition scale as follows:</p>
+
+                <pre><code class="js">
+    'PUR' : {'A': 1, 'C': 0, 'G': 1, 'U': 0, 'T': 0}</code></pre>
+
+                <h2>Additional functionality</h2>
+                <p>In addition to all functions accessible via the provided interface functions, some functions are included that could be useful in building customized interfaces.</p>
+                <h3>Auto align</h3>
+                <p>Profiles can be shifted against each other to find the optimal alignment. This is defined as the alignment with the highest (or the lowest) Pearson correlation coefficient R between the two sequences as obtained by sliding the sequences against each other. This process can be automated:</p>
+
+                <pre><code class="js">
+    findBestShift(id1, id2, inv=false)</code></pre>
+
+                <p><i>id1</i> and <i>id2</i> refer to indices in the <i>data</i> object. The default behavior is to aligning by maximizing the Pearson R between the two profiles. This can be inverted to minimize the observed correlation by the usage of the <i>inv</i> flag.</p>
+                
+                <h2>See also</h2>
+                <p>A minimal example for a functional graph can be found here: <a href="examples/charge.html">pH-dependent charge profile</a></p>
+                <p>An example showing multiple graphs on a single page can be seen in the following poster presented at the German Conference on Bioinformatics 2018: <a target="_blank" href="https://homepage.univie.ac.at/lukas.bartonek/poster/GCB2018.html">GCB 2018 poster</a></p>
+                <p>A reference how this library can be used in interactive <a target="_blank" href="https://revealjs.com/">reveal.js</a> powered presentations can be found here: <a target="_blank" href="examples/presentation/index.html">sample presentation</a></p>
+                <!--                 
+                
+                <h2 id="layout">Layout</h2>
+                
+                <h2 id="examples">Examples</h2>
+                
+                
+       -->
+</body>

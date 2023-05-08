@@ -1,0 +1,553 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#0088DB"/>
+
+    <title>VOLPES - Application</title>
+    <meta name="description" content="VOLPES - Visualization of Physicochemical Sequences">
+    <meta name="application-name" content="VOLPES">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="img/icon/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/icon/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/icon/favicon-16x16.png?v=2">
+    <link rel="manifest" href="img/icon/site.webmanifest?v=2">
+    <link rel="mask-icon" href="img/icon/safari-pinned-tab.svg?v=2" color="#5bbad5">
+    <link rel="shortcut icon" href="img/icon/favicon.ico?v=2">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="msapplication-config" content="img/icon/browserconfig.xml?v=2">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="css/bootstrap-slider.min.css" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+    <style> /*Font specification */
+        @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:500');
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="css/volpini.css">
+    <link rel="stylesheet" type="text/css" href="css/interface.css"> 
+
+</head>
+
+<body>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="js/d3/d3.min.js"></script>
+    <script src="js/bootstrap-slider.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="js/jscolor.js"></script>
+    <script src="js/spearson.js"></script>
+    <script src="js/volpiniLib.js"></script>
+    <script src="js/scaleProperties.js"></script>
+    <script src="js/scaleDescriptions.js"></script>
+    <!-- <script src="js/affLib.js"></script>
+    <script src="js/profile-lib.js"></script>
+    <script src="js/scales.js"></script> -->
+    <!-- <script src="js/aaindex.js"></script> -->
+    <script src="js/FileSaver.min.js"></script>
+    <script src="js/saveSvgAsPng.js"></script>
+
+    <!-- TODO: replace imports in the future with a minified version saved locally -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stackblur-canvas/1.4.1/stackblur.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
+
+    <!-- <canvas id="canv" width="1px" height="1px" visibility="hidden"></canvas>  -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+
+    <script src="js/browser_warning.js"></script>
+
+    <div class="layout">
+        <div class="left-boundary"></div>
+        <div class="right-boundary"></div>
+        <div class="top-boundary">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNavDropdown">
+                    <a class="navbar-brand" href="index.html">
+                        <span style="float: left; display: block;"><img src="img/icon/android-chrome-192x192.png" style="border-width:0px; height: 32px;" /></span>
+                        <span style="float: left; display: block; padding: 4px 0 0 0;">VOLPES</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">App<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Examples
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="examples/hydrophobicity.html">protein hydrophobicity profile</a>
+                                <a class="dropdown-item" href="examples/cognate.html">cognate mRNA/protein pair</a>
+                                <a class="dropdown-item" href="examples/charge.html">pH dependence of protein charge</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="tutorial.html">Tutorial</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar-collapse collapse align-items-center">
+                    <button class="btn btn-sm btn-outline-secondary" type="button" id="importButton"
+                            style="margin-right: 4px;">Import
+                    </button>
+                    <input type="file" id="dataImport" style="display: none;">
+                    <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="modal" data-target="#exportModal" id="exportButton" style="margin-right: 4px;">Export</button>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="modal" data-target="#settingsModal" id="settingsButton" style="margin-right: 4px;">Settings</button>
+                </div>
+                <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="documentation.html">Documentation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="canvas-container">
+            <div style="text-align: center; vertical-align: top;" id="SVGholder">
+                <svg class="canvas" id="profileDrawing" width="1050" height="330"></svg>
+            </div>
+        </div>
+
+        <div class="bottom-container">
+            <div id=interface_container class="interfacecontainer">
+            </div>
+            <button class="btn btn-blue new-interface-btn" data-toggle="tooltip" data-placement="right" title="Add a new polymer sequence to the stage" onclick="addInterface()" id="addInterfaceButton">Add the first sequence</button>
+        </div>
+        <div class="middle-container">
+            <div class="correlation-data">
+                <div class="title_bar"><span style="margin-left: 1em;">Pairwise Pearson R</span>
+                    <div class="cor-button" style="float: right"><i class="material-icons md-24">expand_less</i></div>
+                    <button type="button" class="settings" data-toggle="modal" data-target="#correlationModal"><i class="material-icons md-title-small">build</i></button>
+                </div>
+                <div class="cor-content"></div>
+            </div>
+            <div class="modal fade" id="correlationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Correlation Settings</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="display: flex;margin-bottom: 1em;">
+                                <span class="sliderSwitch-label" style="float: left; width: 30%;">Upper method</span>
+                                <select class="form-control" id="upperCorrelationSetting" style="width: 40%; float: left; margin-left: 1em;">
+                                    <option value="pearson" selected>Pearson R</option>
+                                    <option value="spearman">Spearman</option>
+                                    <option value="determination">R&sup2;</option>
+                                    <option value="rmsd">RMSD</option>
+                                </select>
+                            </div>
+                            <div style="display: flex;">
+                                <span class="sliderSwitch-label" style="float: left; width: 30%;">Lower method</span>
+                                <select class="form-control" id="lowerCorrelationSetting" style="width: 40%; float: left; margin-left: 1em;">
+                                    <option value="pearson">Pearson R</option>
+                                    <option value="spearman" selected>Spearman</option>
+                                    <option value="determination">R&sup2;</option>
+                                    <option value="rmsd">RMSD</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-grey btn-flat" id="corr_close" data-dismiss="modal">Done</button>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-container">
+                
+        </div>
+        <div class="footer-container">
+        </div>
+    </div>
+
+    <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Export Interface</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    Image
+                    <button class="btn btn-primary" onclick="downloadLinkPNG()" style="float: right; margin-right: 10px; margin-bottom: 10px;">PNG</button>
+                    <button class="btn btn-primary" onclick="downloadLinkSVG('profileDrawing')" style="float: right; margin-right: 10px; margin-bottom: 10px;">SVG</button>
+                </div>
+                <div class="modal-body">
+                    Data
+                    <button class="btn btn-primary" onclick="saveData('profile.viz')" style="float: right; margin-right: 10px;">Visualization State</button>
+                </div>
+                <div class="modal-body">
+                    CSV
+                    <div style="float: right;">
+                        <select class="selectpicker" multiple>
+                            <option value="p_alpha">Alpha-propensity</option>
+                        </select>
+                        <button class="btn btn-primary" onclick='saveMultipleCSV(data, $("#exportModal .selectpicker").val())' style="float: right; margin-right: 10px; margin-bottom: 10px;">Go!</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-grey btn-flat" id="corr_close" data-dismiss="modal">Done</button>
+                </div> 
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Settings</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <label class="switch">
+                        <input id="relativeUnitsCheckbox" type="checkbox" onclick="relativeUnitsCheck()">
+                        <div class="sliderSwitch round"></div>
+                    </label><span class="sliderSwitch-label">Relative Units</span><br>
+                    <label class="switch">
+                        <input id="invertY1Checkbox" type="checkbox" onclick="invertY1Check()">
+                        <div class="sliderSwitch round"></div>
+                    </label><span class="sliderSwitch-label">Invert y1-axis</span><br>
+                    <label class="switch">
+                        <input id="invertY2Checkbox" type="checkbox" onclick="invertY2Check()" checked>
+                        <div class="sliderSwitch round"></div>
+                    </label><span class="sliderSwitch-label">Invert y2-axis</span><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-grey btn-flat" id="corr_close" data-dismiss="modal">Done</button>
+                </div>                 
+            </div>
+        </div>
+    </div>
+   
+    <!-- <script src="js/profile_helper.js"></script> -->
+    <script src="js/volpini.js"></script>
+    <script type="text/javascript">
+      data = {
+        "seq" : [],
+        "title" : "test",
+        "relative" : false,
+        "y1_reverse" : false,
+        "y2_reverse" : true,
+        "cor_method" : {
+            "upper" : "pearson",
+            "lower" : "spearman"}
+      };
+      corList = {};
+      drawingProfiles(data);
+
+    </script>
+    <script type="text/javascript">
+        var window_p = $('.prot-window').each(function(element, value) {
+            $(this).slider()
+                .on("slide", function() {
+                    if (data.seq[this.id].type == "protein") {
+                        data.seq[this.id].window = Number(this.value);
+                        $("#"+this.id+".sliderWindow-value").text(this.value);
+                    } else {
+                        data.seq[this.id].window = Number(this.value);
+                        $("#"+this.id+".sliderWindow-value").text(Number(this.value));
+                    }
+                    drawingProfiles(data);
+                })
+                .on("slideStop", function() {
+                    if (data.seq[this.id].type == "protein") {
+                        data.seq[this.id].window = Number(this.value);
+                        $("#"+this.id+".sliderWindow-value").text(this.value);
+                    } else {
+                        data.seq[this.id].window = Number(this.value);
+                        $("#"+this.id+".sliderWindow-value").text(Number(this.value));
+                    }
+                    drawingProfiles(data);
+                })
+                .data('slider');
+        });
+        var shift_p = $('.shift').each(function(element, value) {
+            $(this).slider()
+                .on("slide", function() {
+                    data.seq[this.id].shift = Number(this.value);
+                    drawingProfiles(data);
+                })
+                .on("slideStop", function() {
+                    data.seq[this.id].shift = Number(this.value);
+                    drawingProfiles(data);
+                })
+                .data('slider');
+        });
+        
+        updateShifts(data);
+
+        // insert the sequence into the text field
+        $('.form-inline').each(function(element, value) {
+            $(this).val(data.seq[this.id].sequence);
+        });
+        // redraw the graph upon changes in the sequence text field
+        $('.form-inline').each(function(element, value) {
+            $(this).bind('input propertychange', function() {
+                data.seq[this.id].sequence = this.value;
+                drawingProfiles(data);
+                updateShifts(data);
+            });    
+        });
+        
+        
+        // editing the name of sequences
+        $('.name').each(function(element, value) {
+            $(this).on("change", function() {
+                data.seq[this.id].name = this.value;
+                updateLegend(this.id);
+            })
+        });
+        
+
+        // seleceting scales in the main interface
+        $(document).on('click', '.scale-selector a', function() {
+            data.seq[$(this).parent().attr('id')].scale = this.id;
+            cur_id =  $(this).parent().attr('id');
+            $("#" + cur_id + ".btn-scale").html(trimString(scaleNames[data.seq[cur_id].type][data.seq[cur_id].scale], 9));
+            drawingProfiles(data);
+            updateLegend(cur_id);
+        })
+        
+
+        // selecting different types of polymers
+        $(document).on('click', '.type-selector a', function() {
+            i = $(this).parent().attr('id');
+            data.seq[i].type = this.text.toLowerCase();
+            $("#" + i + ".btn-type").html(trimString(typeNames[data.seq[i].type], 9));
+            if (this.text.toLowerCase()=="protein") {
+                $("#"+i+".selectpicker").html(`
+                                        <option value="p_alpha">Alpha-propensity</option>
+                                        <option value="p_beta">Beta-propensity</option>
+                                        <option value="p_charge">Charge</option>
+                                        <option value="p_comp">Composition</option>
+                                        <option value="p_hydro">Hydrophobicity</option>
+                                        <option value="p_pchem">Physcial-Chemical</option>
+                                        <option value="p_rnaAf">RNA-Affinity</option>
+                                        <option value="p_other">Other</option>
+                                        `)
+                $("#"+i+".selectpicker").selectpicker('refresh')
+            }
+            else if (this.text.toLowerCase()=="rna") {
+                $("#"+i+".selectpicker").html(`
+                                        <option value="r_comp">Composition</option>
+                                        `)
+                $("#"+i+".selectpicker").selectpicker('refresh')
+            }
+            drawingProfiles(data);
+        })
+        
+         // selecting the correlation partner
+         $(document).on('click', '.corr-selector a', function() {
+            corList[$(this).parent().attr('id')] = this.id;
+            updateCorResults(corList);
+        })
+
+        // click on shift + button
+        $(document).on('click', '.btn-more-wndw', function() {
+            curVal = $("#"+this.id+".prot-window").data('slider').getValue();
+            if (curVal < 63) { // magic number - CHANGE!!!
+                curVal += 1;
+                $("#"+this.id+".prot-window").data('slider').setValue(curVal);
+                data.seq[this.id].window = curVal;
+                $("#"+this.id+".firstRow-text").text("Window: " + curVal);
+                drawingProfiles(data);
+            }
+        })
+        $(document).on('click', '.btn-less-wndw', function() {
+            curVal = $("#"+this.id+".prot-window").data('slider').getValue();
+            if (curVal > 1) { // magic number - CHANGE!!!
+                curVal -= 1;
+                $("#"+this.id+".prot-window").data('slider').setValue(curVal);
+                data.seq[this.id].window = curVal;
+                $("#"+this.id+".firstRow-text").text("Window: " + curVal);
+                drawingProfiles(data);
+            }
+        })
+        $(document).on('click', '.btn-more', function() {
+            if (data.seq[this.id].shift < findMaxLength(data.seq)-3) {
+                data.seq[this.id].shift += 1;
+                $("#"+this.id+".shift").data('slider').setValue(data.seq[this.id].shift);
+                $("#"+this.id+".thirdRow-text").text("Shift: " + data.seq[this.id].shift);
+                drawingProfiles(data);
+            }
+        })
+        // click on shift - button
+        $(document).on('click', '.btn-less', function() {
+            if (data.seq[this.id].shift > 0) {
+                data.seq[this.id].shift -= 1;
+                $("#"+this.id+".shift").data('slider').setValue(data.seq[this.id].shift);
+                $("#"+this.id+".thirdRow-text").text("Shift: " + data.seq[this.id].shift);
+                drawingProfiles(data);
+            }
+        })
+
+        $(document).on('click', '.btn-more-thick', function() {
+            if (data.seq[this.id].thickness < 10) {
+                data.seq[this.id].thickness *= 10;
+                data.seq[this.id].thickness += 1;
+                data.seq[this.id].thickness /= 10;
+                $("#"+this.id+".thickness-slider").data('slider').setValue(data.seq[this.id].thickness);
+                $("#"+this.id+".thickness-text").text("Thickness: " + data.seq[this.id].thickness);
+                drawingProfiles(data);
+            }
+        })
+        // click on shift - button
+        $(document).on('click', '.btn-less-thick', function() {
+            if (data.seq[this.id].thickness > 0.1) {
+                data.seq[this.id].thickness *= 10;
+                data.seq[this.id].thickness -= 1;
+                data.seq[this.id].thickness /= 10;
+                $("#"+this.id+".thickness-slider").data('slider').setValue(data.seq[this.id].thickness);
+                $("#"+this.id+".thickness-text").text("Thickness: " + data.seq[this.id].thickness);
+                drawingProfiles(data);
+            }
+        })
+        
+
+        // deal with clicks on submit button in database interface
+        $(document).on('click', '.btn-submit', function() {
+            if ($('#'+this.id+'.btn-label').val() == "Uniprot") {
+                download_data_Uniprot(this.id);
+            }
+            else if ($('#'+this.id+'.btn-label').val() == "ENA") {
+                download_data_ENA(this.id);   
+            }
+            else {
+                $("#setup" + this.id + " .alert_box").empty();
+                $("#setup" + this.id + " .alert_box").append("<div class='alert alert-warning alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Warning</strong> Please select a database first</div>");
+            }
+        })
+
+        $(document).on('keyup', '.sequence-id-input', function (e) {
+            if (e.keyCode == 13) {
+                if ($('#'+this.id+'.btn-label').val() == "Uniprot") {
+                    download_data_Uniprot(this.id);
+                }
+                else if ($('#'+this.id+'.btn-label').val() == "ENA") {
+                    download_data_ENA(this.id);   
+                }
+                else {
+                    $("#setup" + this.id + " .alert_box").empty();
+                    $("#setup" + this.id + " .alert_box").append("<div class='alert alert-warning alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Warning</strong> Please select a database first</div>");
+                }
+            }
+        });
+
+        $(document).on('click', '.btn-clr', function() {
+            $('#'+this.id+'.form-inline').val("");
+            data.seq[this.id].sequence = "";
+            drawingProfiles(data);
+        })
+        
+
+        // switch label and value of dropdown database selector
+        $(document).on('click', '.database-selector a', function() {
+            $(this).parents('.database-menu').find('.btn-label').html($(this).text());
+            $(this).parents('.database-menu').find('.btn-label').val($(this).text());
+        })
+        
+
+        // deal with color changes in the colorpicker
+        function updateColor(jscolor, id) {
+            data.seq[id].color = "#" + jscolor
+            $("#legend"+id+" .color-display").css('background-color', data.seq[id].color)
+            drawingProfiles(data);
+        }
+        
+        $(document).on('click', '.close-button', function() {
+            $('.tooltip').tooltip('hide');
+            delete corList[this.id];
+            // delete all references to this.id in corList
+            for(var d in corList) {
+                if(corList.hasOwnProperty(d) && corList[d] == this.id) {
+                    delete corList[d];
+                    $("#" + d + ".corr_output").text("");
+                }
+            }
+            
+            removeInterfaceBox(this.id);
+            $("#" + this.id + ".corr_output").text("");
+
+            if (getActiveData(data).length == 0) {
+                $("#addInterfaceButton").text("Add the first sequence")
+            }
+            
+        })
+
+        $("#addInterfaceButton").tooltip();
+
+        $('#exportModal').on('shown.bs.modal', function(){
+            setOptionsList();
+        });
+        
+        $('.selectpicker').on('change', function(){
+            createScaleList(this.id, $(this).val());
+        });
+        
+        $('.scaleList').on('change', function(){
+            renderScaleDetails(this.id, $(this).val());
+        });
+        document.getElementById('importButton').onclick = function() {
+            document.getElementById('dataImport').click();
+        }
+        document.getElementById('dataImport')
+            .addEventListener('change', readSingleFile, false);
+        $(".cor-button").click(function(){
+            if($(this).html() == '<i class="material-icons md-24">expand_less</i>'){
+                $(this).html('<i class="material-icons md-24">expand_more</i>');
+            }
+            else{
+                $(this).html('<i class="material-icons md-24">expand_less</i>');
+            }
+            $(this).parent().parent().find('.cor-content').slideToggle(50, 'linear');
+        });
+        $('#upperCorrelationSetting').on('change', function() {
+            data.cor_method.upper = this.value;
+            drawingProfiles(data);
+        });
+        $('#lowerCorrelationSetting').on('change', function() {
+            data.cor_method.lower = this.value;
+            drawingProfiles(data);
+        });
+        $('#exportModal').on('shown.bs.modal', function(e) {
+            var htmlData = "";
+            var datList = getActiveData(data);
+            for (var i=0; i<datList.length; i++) {
+                htmlData += '<option value="'+datList[i][1]+'">'+(datList[i][1]+1)+': '+datList[i][0]+'</option>'
+            }
+            if (htmlData == "") {
+                htmlData += "<option disabled>&#8195;</option>";
+            }
+            $("#exportModal .selectpicker").html(htmlData);
+            $("#exportModal .selectpicker").selectpicker('refresh');
+        })
+    </script>
+</body>
+</html>

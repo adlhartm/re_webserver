@@ -1,0 +1,265 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="theme-color" content="#0088DB"/>
+
+    <title>VOLPES - Cognate</title>
+    <meta name="description" content="Cognate sequences example for the VOLPES tool">
+    <meta name="application-name" content="VOLPES">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/icon/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/icon/favicon-32x32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="../img/icon/favicon-16x16.png?v=2">
+    <link rel="manifest" href="../img/icon/site.webmanifest?v=2">
+    <link rel="mask-icon" href="../img/icon/safari-pinned-tab.svg?v=2" color="#5bbad5">
+    <link rel="shortcut icon" href="../img/icon/favicon.ico?v=2">
+    <meta name="msapplication-TileColor" content="#00aba9">
+    <meta name="msapplication-config" content="../img/icon/browserconfig.xml?v=2">
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link href="../css/bootstrap-slider.min.css" rel="stylesheet">
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+    <style> /*Font specification */
+        @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:500');
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../css/volpini.css">
+    <link rel="stylesheet" type="text/css" href="../css/interface.css">
+    
+
+
+
+</head>
+
+<body>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <!-- <script src="js/bootstrap.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="../js/d3/d3.min.js"></script>
+    <script src="../js/bootstrap-slider.min.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="../js/jscolor.js"></script>
+    <script src="../js/spearson.js"></script>
+    <script src="../js/volpiniLib.js"></script>
+    <script src="../js/scaleProperties.js"></script>
+    <script src="../js/scaleDescriptions.js"></script>
+    <!-- <script src="../js/affLib.js"></script>
+    <script src="../js/profile-lib.js"></script>
+    <script src="../js/scales.js"></script>
+    <script src="../js/aaindex.js"></script> -->
+    <script src="../js/FileSaver.min.js"></script>
+    <script src="../js/saveSvgAsPng.js"></script>
+
+    <!-- TODO: replace imports in the future with a minified version saved locally -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/canvg/1.4/rgbcolor.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stackblur-canvas/1.4.1/stackblur.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/canvg/dist/browser/canvg.min.js"></script>
+
+    <!-- <canvas id="canv" width="1px" height="1px" visibility="hidden"></canvas>  -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+    <script src="../js/browser_warning.js"></script>
+
+    <div class="layout-example">
+        <div class="left-boundary"></div>
+        <div class="right-boundary"></div>
+        <div class="top-boundary">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNavDropdown">
+                    <a class="navbar-brand" href="../index.html">
+                        <span style="float: left; display: block;"><img src="../img/icon/android-chrome-192x192.png" style="border-width:0px; height: 32px;" /></span>
+                        <span style="float: left; display: block; padding: 4px 0 0 0;">VOLPES</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../app.html">App</a>
+                        </li>
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Examples
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="hydrophobicity.html">protein hydrophobicity profile</a>
+                                <a class="dropdown-item" href="cognate.html">cognate mRNA/protein pair</a>
+                                <a class="dropdown-item" href="charge.html">pH dependence of protein charge</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../tutorial.html">Tutorial</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../documentation.html">Documentation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../about.html">About</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="canvas-container">
+            <div style="text-align: center; vertical-align: top;" id="SVGholder">
+                <svg class="canvas" id="profileDrawing" width="720" height="330"></svg>
+            </div>
+        </div>
+        <div class="description-container">
+            <h4>Protein guanine affinity and purine density of its cognate mRNA</h4>
+            <p>The guanine affinity profile<sup><a href="https://www.ncbi.nlm.nih.gov/pubmed/23868089">1</a></sup> of a human RNA polymerase III subunit (<span style="color: #2f66ac;">dark blue</span>) shows high similarity to the purine density profile of its own mRNA (<span style="color: #b6c1de;">light blue</span>). Using the interface below, the affinity profile can be recalculated for different nucleobases or exchanged for other protein properties. Similarly, different mRNA nucleobase density profiles can be explored. The similarity between active profiles can be quantified using the correlation dropdown, which shows the Pearson correlation coefficient between the two.</p>
+            <p><i>Note: the protein and RNA axes go in opposite directions. This is due to the affinity scales being defined in energy units whereby the more negative values indicate a stronger interaction.</i></p>
+
+            <p>Data: Uniprot ID <a href="https://www.uniprot.org/uniprot/Q9BUI4">Q9BUI4</a>, ENA ID <a href="https://www.ebi.ac.uk/ena/data/view/AAB63675">AAB63675.1</a></p>
+            <span style="float: left;"><a href="hydrophobicity.html">&larr; Previous Example</a></span>
+            <span style="float: right;"><a href="charge.html">Next Example &rarr;</a></span>
+        </div>
+        <div class="bottom-container">
+            <div id=interface_container class="interfacecontainer">
+            </div>
+        </div>
+        <div class="middle-container">
+            <div class="correlation-data" style="width: 180px;">
+                <div class="title_bar"><span style="margin-left: 1em;">Pairwise Pearson R</span>
+                    <div class="cor-button" style="float: right"><i class="material-icons md-24">expand_less</i></div>
+                    <button type="button" class="settings" data-toggle="modal" data-target="#correlationModal"><i class="material-icons md-title-small">build</i></button>
+                </div>
+                <div class="cor-content"></div>
+            </div>
+            <div class="modal fade" id="correlationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Correlation Settings</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="display: flex;margin-bottom: 1em;">
+                                <span class="sliderSwitch-label" style="float: left; width: 30%;">Upper method</span>
+                                <select class="form-control" id="upperCorrelationSetting" style="width: 40%; float: left; margin-left: 1em;">
+                                    <option value="pearson" selected>Pearson R</option>
+                                    <option value="spearman">Spearman</option>
+                                    <option value="determination">R&sup2;</option>
+                                    <option value="rmsd">RMSD</option>
+                                </select>
+                            </div>
+                            <div style="display: flex;">
+                                <span class="sliderSwitch-label" style="float: left; width: 30%;">Lower method</span>
+                                <select class="form-control" id="lowerCorrelationSetting" style="width: 40%; float: left; margin-left: 1em;">
+                                    <option value="pearson">Pearson R</option>
+                                    <option value="spearman" selected>Spearman</option>
+                                    <option value="determination">R&sup2;</option>
+                                    <option value="rmsd">RMSD</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-grey btn-flat" id="corr_close" data-dismiss="modal">Done</button>
+                        </div>                         
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-container">
+        </div>
+    </div>
+
+</body>
+<!-- <script src="../js/profile_helper.js"></script> -->
+<script src="../js/volpini.js"></script>
+<script type="text/javascript">
+    data = {
+      "seq" : [],
+      "title" : "test",
+
+    };
+    corList = {};
+</script>
+<script type="text/javascript">
+    data = {
+    "seq": [
+        {
+            "type": "protein",
+            "scale": "GUA-affinity",
+            "sequence": "MTQAEIKLCSLLLQEHFGEIVEKIGVHLIRTGSQPLRVIAHDTGTSLDQVKKALCVLVQHNLVSYQVHKRGVVEYEAQCSRVLRMLRYPRYIYTTKTLYSDTGELIVEELLLNGKLTMSAVVKKVADRLTETMEDGKTMDYAEVSNTFVRLADTHFVQRCPSVPTTENSDPGPPPPAPTLVINEKDMYLVPKLSLIGKGKRRRSSDEDAAGEPKAKRPKYTTDNKEPIPDDGIYWQANLDRFHQHFRDQAIVSAVANRMDQTSSEIVRTMLRMSEITTSSSAPFTQPLSSNEIFRSLPVGYNISKQVLDQYLTLLADDPLEFVGKSGDSGGGMYVINLHKALASLATATLESVVQERFGSRCARIFRLVLQKKHIEQKQVEDFAMIPAKEAKDMLYKMLSENFMSLQEIPKTPDHAPSRTFYLYTVNILSAARMLLHRCYKSIANLIERRQFETKENKRLLEKSQRVEAIIASMQATGAEEAQLQEIEEMITAPERQQLETLKRNVNKLDASEIQVDETIFLLESYIECTMKRQ",
+            "window": 21,
+            "shift": 0,
+            "smoothing_method": "boxcar",
+            "name": "DNA-directed RNA polymerase III subunit RPC3",
+            "organism": "",
+            "thickness": 2,
+            "color": "#2f66ac",
+            "active": true,
+            "visible": true,
+            "profile": []
+        },
+        {
+            "type": "rna",
+            "scale": "PUR-content",
+            "sequence": "AUGACUCAAGCAGAAAUUAAGCUCUGUUCUUUGUUGCUGCAAGAGCAUUUUGGAGAGAUUGUAGAAAAAAUUGGAGUCCAUCUGAUAAGAACCGGCAGCCAGCCACUAAGAGUAAUUGCCCAUGACACAGGAACAUCACUGGAUCAGGUGAAGAAAGCCCUGUGUGUCCUCGUCCAACAUAACCUGGUGAGUUAUCAAGUGCACAAACGUGGUGUGGUGGAGUAUGAAGCCCAGUGCAGCCGGGUAUUGCGAAUCGUUAGAUAUCCCCGGUACAUCUAUACUACCAAAACUCUGUACAGUGACACUGGAGAGCUGAUUGUUGAGGAGCUUCUGUUGAACGGCAAACUGACAAUGUGCACUGUUGUGAAGAAAGUGGCAGACCGGCUCACAGAGACCAUGGAGGAUGGCAAGACCAUGGACUAUNCUGAAGUAUCAAACACAUUUNUNCGACUGGCAGACACACACUUUGUACAACNNNNCCCUUCGGUACCUACCACUGAGAAUUCAGACCCUGGGCCACCACCACCUGCNCCCACACUUGUCAUUAAUGAAAAGGACAUGUACCUGGUUCCUAAACUCAGCUUGAUAGGGAAAGGUAAAAGGAGGAGAUCAUCUGAUGAAGAUGCUGCUGGGGAGCCCAAGGCAAGAGACCAAAAUAUACUACAGAUAACAAGGNGCCCAUUCCAGAUGAUGGGAUUUAUUGGCAGGCCCAACCUUGACAGAUUCCGCCAACACUUCCGUGACCAAGCCAUUGUGAGCGCAGUUGCUAACAGGAUGGACCAGACAAGCAGCGAGAUUGUGCGAACCAUGCUCCGAAUGAGUGAGAUUACCACUUCCUCUAGUGCUCCCUUCACCCAGCCAUUGUUUUCCAAUGAGAUCUUCAGAUCCCUACCUGUUGGCUAUAACAUCUCUAAGCAAGUUCUUGAUCAGUAUCUCACUCUGCUGGCAGAUGAUCCACUAGAGUUUGUUGGAAAGUCUGGCGACAGUGGUGGAGGAAUGUAUGUCAUCAACCUCCAUAAGGCAUUACGAUCCCUAGCCACAGCCACUCUGGAGUCCGUCGUACAGGAGAGAUUUGGGUCUCGCUGUGCUAGAAUAUGCCGUCUAGUUUUGCAGAAGAAACACAUAGAGCAGAAGCAAGUGGAAGACUUUGCAAUGAUUCUGCAAGAGGCAAAGGAUAUGCUAUAUAAGAUGCUCUCAGGAAAUUUCAUGUCACUCCAGGAAAUUCCCAAAACACCAGACCAUGCCCCAUCCAGGACCUUCUAUUUAUAUACUGUGAACAUCCUGUCAGCUGCCCGAAUGUUGUUCGACAGGUGCUACAAGAGCAUAGCCAACUUGAUAGAAAGGAGGCAAUUUGAAACCAAAGAGAAUAAGCGUCUACUAGAAAAAUCUCAGAGGGUAGAAGCCAUCAUUGCAUCUAUGCAGGCUACUGGUGCAGAGGAAGCACAGUUACAAGAAAUAGAGGAGAUGAUCACAGCUCCUGAACGUCAGCAGCUAGAGACCCUGAAACGUAAUGUCAACAAGUUGGAUGCCAGUGAGAUCCAGGUGGNNGAAACCAUCUUCCUGCUGGAGUCUUACAUUGAGUGCACCAUGAAGAGACAGUGA",
+            "window": 21,
+            "shift": 0,
+            "smoothing_method": "boxcar",
+            "name": "mRNA of RNA polymerase III subunit RPC3",
+            "organism": "",
+            "thickness": 2,
+            "color": "#b6c1de",
+            "active": true,
+            "visible": true,
+            "profile": []
+        }
+    ],
+    "title": "test",
+    "relative" : false,
+    "y1_reverse" : false,
+    "y2_reverse" : true,
+    "cor_method" : {
+            "upper" : "pearson",
+            "lower" : "spearman"}
+    }
+    
+    addInterfaceBasedOnData(data);
+    drawingProfiles(data);
+
+    $(".cor-button").click(function(){
+        if($(this).html() == '<i class="material-icons md-24">expand_less</i>'){
+            $(this).html('<i class="material-icons md-24">expand_more</i>');
+        }
+        else{
+            $(this).html('<i class="material-icons md-24">expand_less</i>');
+        }
+        $(this).parent().parent().find('.cor-content').slideToggle(50, 'linear');
+    });
+    $('#upperCorrelationSetting').on('change', function() {
+            data.cor_method.upper = this.value;
+            drawingProfiles(data);
+    });
+    $('#lowerCorrelationSetting').on('change', function() {
+        data.cor_method.lower = this.value;
+        drawingProfiles(data);
+    });
+
+</script>
+<script src="../js/loadFunctions.js"></script>
+
+</html>
