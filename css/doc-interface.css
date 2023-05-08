@@ -14,14 +14,16 @@ div.rightHandContent {
 }
 
 nav[data-toggle='toc'] {
-  top: 42px;
+  top: 60px;
+ 
 }
+
 
 /* small screens */
 @media (max-width: 768px) {
   /* override stickyness so that the navigation does not follow scrolling */
   nav[data-toggle='toc'] {
-    margin-bottom: 42px;
+    margin-bottom: 60px;
     position: static;
   }
 

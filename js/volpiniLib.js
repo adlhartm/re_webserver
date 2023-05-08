@@ -65,7 +65,8 @@ function calculateOverlap(prof1, prof2, shift1, shift2) {
         while((p1[i].x < p2[j].x) && (i<p1.length-1)) {
             i++;
         }
-        if ((p1[i].y && p2[j].y) && (p1[i].x == p2[j].x)) {
+        // do not ignore y-values of 0
+        if ((!isNaN(p1[i].y) && !isNaN(p2[j].y)) && (p1[i].x == p2[j].x)) {
             newProf1.push(p1[i]);
             newProf2.push(p2[j]);
         }
@@ -74,19 +75,26 @@ function calculateOverlap(prof1, prof2, shift1, shift2) {
     return {p1: newProf1, p2: newProf2}
 }
 
-function windowAverage(arr, win, step) {
-    var output = []
+function windowAverage(arr, weight, win, step) {
+    var output = {"arr":[],
+                  "weight":[]
+    };
     win = win*step;
     if (arr.length >= win) {
         tmp = arr.splice(0,win);
-        output.push(d3.sum(tmp)/win)
+        tmp_weight = weight.splice(0, win);
+        output.arr.push(d3.sum(tmp)/d3.sum(tmp_weight))
+        output.weight.push(d3.sum(tmp_weight)/win)
     } else {
         return output;
     }
     while (arr.length >= step) {
         tmp.splice(0,step);
         tmp = tmp.concat(arr.splice(0,step));
-        output.push(d3.sum(tmp)/win);
+        tmp_weight.splice(0, step);
+        tmp_weight = tmp_weight.concat(weight.splice(0,step));
+        output.arr.push(d3.sum(tmp)/d3.sum(tmp_weight));
+        output.weight.push(d3.sum(tmp_weight)/win)
     }
 
     return output;
@@ -265,8 +273,8 @@ function trimString(str, len) {
 }
 
 function parseFASTA(str) {
-    re = /(>.*\n|\s)/g;
-    return str.replace(re, '')
+    re = /(>.*\n|\n)/g;
+    return str.replace(re, '').toUpperCase()
 }
 
 function getPropertyString(id) {
@@ -359,7 +367,7 @@ function getBiasedColorHSL(i, S = null, L = null, noise = null) {
 
 function getRandomColorHSL(H = null, S = null, L = null, noise = null) {
     if (noise) {
-    
+
         if (! H) { H = Math.random(); }
         else {
             H = H + (Math.random() * noise) - (noise/2);
@@ -394,12 +402,23 @@ function getRandomColorHSL(H = null, S = null, L = null, noise = null) {
 
 function calculate_pearson(a, b) {
     overlap = calculateOverlap(data.seq[a].profile, data.seq[b].profile, data.seq[a].shift, data.seq[b].shift);
-    return spearson.round(spearson.correlation.pearson(yVal(overlap.p1), yVal(overlap.p2), true),2).toString();
+    if (overlap.p1.length == 0) {
+        return NaN;
+    }
+    else {
+        return spearson.round(spearson.correlation.pearson(yVal(overlap.p1), yVal(overlap.p2), true),2).toString();
+    }
 }
+
 
 function calculate_determination(a, b) {
     overlap = calculateOverlap(data.seq[a].profile, data.seq[b].profile, data.seq[a].shift, data.seq[b].shift);
-    return spearson.round(Math.pow(spearson.correlation.pearson(yVal(overlap.p1), yVal(overlap.p2), true),2),2).toString();
+    if (overlap.p1.length == 0) {
+        return NaN;
+    }
+    else {
+        return spearson.round(Math.pow(spearson.correlation.pearson(yVal(overlap.p1), yVal(overlap.p2), true),2),2).toString();
+    }
 }
 
 function calculate_RMSD(a, b) {
@@ -466,7 +485,7 @@ function importer(newData) {
 }
 
 function assertCorrect(d) {
-    listOfKeys = ["active", "color", "name", "organism", "profile", "scale", "sequence", "shift", "smoothing_method", "thickness", "type", "visible", "window"];
+    listOfKeys = ["active", "color", "name", "organism", "profile", "scale", "sequence", "shift", "smoothing_method", "thickness","min_existing", "type", "visible", "window"];
     if (d.hasOwnProperty('seq')) {
         for (i in d.seq) {
             for (key in listOfKeys) {
@@ -508,15 +527,29 @@ function createStringFromScaleValues(scaleValue, scaleType) {
         return;
     }
 
-    for (name in names) {
-        retStr += names[name] + ":" + scale[scaleType][scaleValue][names[name]] + " ";
+    var unavailable = false
+    for (i in names) {
+        var name = names[i];
+        var value = scale[scaleType][scaleValue][name];
+
+        if (isNaN(value)) {
+            retStr += name + ":* ";
+            unavailable = true;
+        }
+        else {
+            retStr += name + ":" + scale[scaleType][scaleValue][name] + " "
+        }
     }
+
+    if (unavailable == true) {
+        retStr += "<br>*not available  "
+    }
+
     return retStr.slice(0,-1);
 
 }
 
 function createScaleList(targetID, selectedGroups, type) {
-
     if (type=="protein") {
         longOptions = { "p_alpha": "Alpha-propensity",
                         "p_beta": "Beta-propensity",
@@ -550,6 +583,21 @@ function createScaleList(targetID, selectedGroups, type) {
             newContent += "<option disabled>&#8195;"+longOptions[group]+"</option>"
             for (var i=0; i < classification[group].length; i++) {
                 if (classification[group][i] in scale.rna) {
+                    newContent += "<option>" + classification[group][i] + "</option>";
+                }
+            }
+        }
+        $("#"+targetID+".scaleList").html(newContent);
+    }
+    else if (type=="dna") {
+        longOptions = { "d_comp" : "Composition"};
+
+        newContent = "";
+        for (var j=0; j < selectedGroups.length; j++) {
+            var group = selectedGroups[j];
+            newContent += "<option disabled>&#8195;"+longOptions[group]+"</option>"
+            for (var i=0; i < classification[group].length; i++) {
+                if (classification[group][i] in scale.dna) {
                     newContent += "<option>" + classification[group][i] + "</option>";
                 }
             }

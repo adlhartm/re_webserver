@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0088DB"/>
 
     <title>VOLPES - Cognate</title>
-    <meta name="description" content="Cognate sequences example for the VOLPES tool">
+    <meta name="description" content="Autogenous sequences example for the VOLPES tool">
     <meta name="application-name" content="VOLPES">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -99,7 +99,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="hydrophobicity.html">protein hydrophobicity profile</a>
-                                <a class="dropdown-item" href="cognate.html">cognate mRNA/protein pair</a>
+                                <a class="dropdown-item" href="cognate.html">autogenous mRNA/protein pair</a>
                                 <a class="dropdown-item" href="charge.html">pH dependence of protein charge</a>
                             </div>
                         </li>
@@ -126,7 +126,7 @@
             </div>
         </div>
         <div class="description-container">
-            <h4>Protein guanine affinity and purine density of its cognate mRNA</h4>
+            <h4>Protein guanine affinity and purine density of its autogenous mRNA</h4>
             <p>The guanine affinity profile<sup><a href="https://www.ncbi.nlm.nih.gov/pubmed/23868089">1</a></sup> of a human RNA polymerase III subunit (<span style="color: #2f66ac;">dark blue</span>) shows high similarity to the purine density profile of its own mRNA (<span style="color: #b6c1de;">light blue</span>). Using the interface below, the affinity profile can be recalculated for different nucleobases or exchanged for other protein properties. Similarly, different mRNA nucleobase density profiles can be explored. The similarity between active profiles can be quantified using the correlation dropdown, which shows the Pearson correlation coefficient between the two.</p>
             <p><i>Note: the protein and RNA axes go in opposite directions. This is due to the affinity scales being defined in energy units whereby the more negative values indicate a stronger interaction.</i></p>
 
@@ -174,7 +174,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-sm btn-grey btn-flat" id="corr_close" data-dismiss="modal">Done</button>
+                            <button type="button" class="btn btn-sm btn-blue btn-flat" id="corr_close" data-dismiss="modal">Done</button>
                         </div>                         
                     </div>
                 </div>
@@ -200,7 +200,7 @@
     "seq": [
         {
             "type": "protein",
-            "scale": "GUA-affinity",
+            "scale": "GUA-affinity (knowledge-based)",
             "sequence": "MTQAEIKLCSLLLQEHFGEIVEKIGVHLIRTGSQPLRVIAHDTGTSLDQVKKALCVLVQHNLVSYQVHKRGVVEYEAQCSRVLRMLRYPRYIYTTKTLYSDTGELIVEELLLNGKLTMSAVVKKVADRLTETMEDGKTMDYAEVSNTFVRLADTHFVQRCPSVPTTENSDPGPPPPAPTLVINEKDMYLVPKLSLIGKGKRRRSSDEDAAGEPKAKRPKYTTDNKEPIPDDGIYWQANLDRFHQHFRDQAIVSAVANRMDQTSSEIVRTMLRMSEITTSSSAPFTQPLSSNEIFRSLPVGYNISKQVLDQYLTLLADDPLEFVGKSGDSGGGMYVINLHKALASLATATLESVVQERFGSRCARIFRLVLQKKHIEQKQVEDFAMIPAKEAKDMLYKMLSENFMSLQEIPKTPDHAPSRTFYLYTVNILSAARMLLHRCYKSIANLIERRQFETKENKRLLEKSQRVEAIIASMQATGAEEAQLQEIEEMITAPERQQLETLKRNVNKLDASEIQVDETIFLLESYIECTMKRQ",
             "window": 21,
             "shift": 0,
@@ -208,6 +208,7 @@
             "name": "DNA-directed RNA polymerase III subunit RPC3",
             "organism": "",
             "thickness": 2,
+            "min_existing": 0,
             "color": "#2f66ac",
             "active": true,
             "visible": true,
@@ -223,6 +224,7 @@
             "name": "mRNA of RNA polymerase III subunit RPC3",
             "organism": "",
             "thickness": 2,
+            "min_existing": 0,
             "color": "#b6c1de",
             "active": true,
             "visible": true,

@@ -50,6 +50,7 @@ function updateLegend(id) {
 }
 
 function extractGaps(seq, wndw) {
+//not used anymore
     var gaps = [];
     var gaplessSeq = "";
 
@@ -66,6 +67,7 @@ function extractGaps(seq, wndw) {
     return {gap: gaps, seq: gaplessSeq};
 }
 function extractGapsCodon(seq, wndw) {
+//not used anymore
     var gaps = [];
     var gaplessSeq = "";
 
@@ -81,42 +83,45 @@ function extractGapsCodon(seq, wndw) {
 
     return {gap: gaps, seq: gaplessSeq};
 }
-function profile_calculation(seq, wndw, scaleID, type, shift, method) {
+function profile_calculation(seq, wndw, scaleID, type, shift, method, min_existing) {
     var seqArray = [];
+    var weights = [];
     var smoothArray = [];
-    if (type == "protein") {
-        var noGaps = extractGaps(seq, wndw);
-    }
-    else if (type == "rna") {
-        var noGaps = extractGapsCodon(seq, wndw);
-    }
-    var seq = noGaps.seq;
-    if (scaleID == "") {
+    var smoothWeights = [];
+
+    if (scaleID == "" || scaleID == "no scale selected") {
         for (var i = 0, len = seq.length; i < len; i++) {
             seqArray.push(0);
-        };  
+            weights.push(1)
+        };
     }
     else {
         for (var i = 0, len = seq.length; i < len; i++) {
-            seqArray.push(scale[type][scaleID][seq[i]]);
+            var val = scale[type][scaleID][seq[i]];
+            var weight = Number(!isNaN(val));
+            seqArray.push(val);
+            weights.push(weight);
         };
     }
     switch(method) {
         case "boxcar":
             switch (type) {
                 case "protein":
-                    smoothArray = windowAverage(seqArray,wndw,1);
-                    for (var i = 0, len = noGaps.gap.length; i < len; i++) {
-                        smoothArray.splice(noGaps.gap[i], 0, NaN);
-                    };
+                    var tmp = windowAverage(seqArray, weights, wndw,1);
+                    smoothArray = tmp.arr
+                    smoothWeights = tmp.weight
+
                     var xVals = [Math.round((wndw-1)/2)+shift], x=Math.round((wndw-1)/2);
                     while(x<(smoothArray.length+Math.round((wndw-1)/2) ) ){x+=1;xVals.push(x+shift)};
                     break;
+
+                case "dna":
                 case "rna":
-                    smoothArray = windowAverage(seqArray,wndw,3);
-                    for (var i = 0, len = noGaps.gap.length; i < len; i++) {
-                        smoothArray.splice(noGaps.gap[i], 0, NaN);
-                    };
+                    var tmp = windowAverage(seqArray, weights, wndw,3);
+                    smoothArray = tmp.arr;
+                    smoothWeights = tmp.weight;
+
+
                     var xVals = [((wndw-1)/2)+shift], x=(wndw-1)/2;
                     while(x<(smoothArray.length+Math.round((wndw-1)/2) ) ){x+=1;xVals.push(x+shift)};
                     break;
@@ -129,6 +134,8 @@ function profile_calculation(seq, wndw, scaleID, type, shift, method) {
                     var xVals = [Math.round((wndw-1)/2)+shift], x=Math.round((wndw-1)/2);
                     while(x<(smoothArray.length+Math.round((wndw-1)/2) ) ){x+=1;xVals.push(x+shift)};
                     break;
+
+                case "dna":
                 case "rna":
                     smoothArray = savitzky_golay(seqArray,wndw,3)
                     var xVals = [Math.round((wndw-1)/2)+shift], x=Math.round((wndw-1)/2);
@@ -140,19 +147,27 @@ function profile_calculation(seq, wndw, scaleID, type, shift, method) {
 
     var data = []
     for (var i = 0; i < smoothArray.length; i++) {
-        data.push({"x":xVals[i], "y":smoothArray[i]});
+        if (smoothWeights[i] >= min_existing){
+            data.push({"x":xVals[i], "y":smoothArray[i], "w":smoothWeights[i]});
+        }
+        else {
+            data.push({"x":xVals[i], "y":NaN, "w":smoothWeights[i]});
+        }
+
     };
+
     return data;
 };
 
 function drawingProfiles(data, id = ".canvas") {
-    
+
     data.seq.forEach(function(d) {
         if (d.active && d.visible) {
-            d.profile = profile_calculation(d.sequence, d.window, d.scale, d.type, d.shift, d.smoothing_method);
+            d.profile = profile_calculation(d.sequence, d.window, d.scale, d.type, d.shift, d.smoothing_method, d.min_existing);
         }
     });
-    
+
+
     input = {"seq": []};
     input.title = data.title;
     input.seq = data.seq.filter(function (n) {
@@ -190,8 +205,11 @@ function drawingProfiles(data, id = ".canvas") {
                .classed("axis", true)
                .attr("transform", "translate(0," + height + ")")
                .call(xAxis);
-    
-    if (input.seq.map(function(d) {return d["type"]}).includes("rna")) {
+
+
+
+    // setting xlabel
+    if (input.seq.map(function(d) {return d["type"]}).includes("rna") || input.seq.map(function(d) {return d["type"]}).includes("dna")) {
         if (input.seq.map(function(d) {return d["type"]}).includes("protein")) {
             g.append("text")
                 .attr("y", height + margin.bottom)
@@ -232,6 +250,8 @@ function drawingProfiles(data, id = ".canvas") {
             } else {
                 y1_min = y1_max*(-1)
             };
+
+
         } else {
             var y1_min = findMin(data.seq, "protein");
             var y1_max = findMax(data.seq, "protein");
@@ -239,24 +259,31 @@ function drawingProfiles(data, id = ".canvas") {
 
         if (data.y1_reverse) {
             padding1 = (y1_min - y1_max)*0.1;
-
+            var gap_line_position_protein = y1_min + padding1*0.8
             var y1 = d3.scaleLinear()
                         .domain([y1_max - padding1, y1_min + padding1])
                         .rangeRound([height, 0]);
         } else {
             var padding1 = (y1_max - y1_min)*0.1;
-
+            var gap_line_position_protein = y1_max + padding1*0.8
             var y1 = d3.scaleLinear()
                     .domain([y1_min - padding1, y1_max + padding1])
                     .rangeRound([height, 0]);
         }
 
         var yAxis1 = d3.axisLeft(y1);
-        
+
         var protLine = d3.line()
             .x(function(d) {return x1(d.x); })
             .y(function(d) {return y1(d.y); })
             .defined(function(d) {return !isNaN(d.y);});
+
+        var protGapLine  = d3.line()
+            .x(function(d) {return x1(d.x); })
+            .y(function(d) {return y1(gap_line_position_protein); })
+            .defined(function(d) {return (d.w != 1 && !isNaN(d.y));});
+
+
 
         var gY1 = g.append("g")
                    .classed("axisBlack", true)
@@ -277,10 +304,11 @@ function drawingProfiles(data, id = ".canvas") {
                 .text("Protein")
         };
     }
-    if (input.seq.map(function(d) {return d["type"]}).includes("rna")) {
+    if (input.seq.map(function(d) {return d["type"]}).includes("rna") || input.seq.map(function(d) {return d["type"]}).includes("dna")) {
 
         if (data.relative) {
             rescale(data.seq, 'rna');
+            rescale(data.seq, 'dna');
 
             var y2_min = findMinGlobal(input.seq);
             var y2_max = findMaxGlobal(input.seq);
@@ -290,18 +318,19 @@ function drawingProfiles(data, id = ".canvas") {
                 y2_min = y2_max*(-1)
             };
         } else {
-            var y2_min = findMin(input.seq, "rna");
-            var y2_max = findMax(input.seq, "rna");
+            var y2_min = d3.min([findMin(input.seq, "rna"), findMin(input.seq, "dna")]);
+            var y2_max = d3.max([findMax(input.seq, "rna"), findMax(input.seq, "dna")]);
         }
 
         if (data.y2_reverse) {
             padding2 = (y2_min - y2_max)*0.1;
-
+            var gap_line_position_rna = y2_min + padding2*0.8
             var y2 = d3.scaleLinear()
                         .domain([y2_max - padding2, y2_min + padding2])
                         .rangeRound([height, 0]);
         } else {
             var padding2 = (y2_max - y2_min)*0.1;
+            var gap_line_position_rna = y2_max + padding2*0.8
 
             var y2 = d3.scaleLinear()
                         .domain([y2_min - padding2, y2_max + padding2])
@@ -313,7 +342,14 @@ function drawingProfiles(data, id = ".canvas") {
         var rnaLine  = d3.line()
             .x(function(d) {return x1(d.x); })
             .y(function(d) {return y2(d.y); })
-            .defined(function(d) {return !isNaN(d.y);});
+            .defined(function(d) {return (!isNaN(d.y));})
+            ;
+        var rnaGapLine  = d3.line()
+            .x(function(d) {return x1(d.x); })
+            .y(function(d) {return y2(gap_line_position_rna); })
+            .defined(function(d) {return (d.w != 1 && !isNaN(d.y));})
+            ;
+
 
         var gY2 = g.append("g")
                    .classed("axisBlack", true)
@@ -326,13 +362,13 @@ function drawingProfiles(data, id = ".canvas") {
                 .attr("y", -width - margin.right * (2/3))
                 .attr("x", height*(2/5))
                 .attr("transform", "rotate(90)")
-                .text("RNA [sd]")
+                .text("RNA / DNA [sd]")
         } else {
             g.append("text")
                 .attr("y", -width - margin.right * (2/3))
                 .attr("x", height*(2/5))
                 .attr("transform", "rotate(90)")
-                .text("RNA")
+                .text("RNA / DNA")
         }
     }
 
@@ -348,22 +384,32 @@ function drawingProfiles(data, id = ".canvas") {
 
         gX1.call(xAxis.scale(xz));
 
-        if (input.seq.map(function(d) {return d["type"]}).includes("rna")) {
+        if (input.seq.map(function(d) {return d["type"]}).includes("rna") || (input.seq.map(function(d) {return d["type"]}).includes("dna") )) {
             rnaLine
+                .x(function(d) {return xz(d.x); })
+            rnaGapLine
                 .x(function(d) {return xz(d.x); })
         }
         if (input.seq.map(function(d) {return d["type"]}).includes("protein")) {
             protLine
                 .x(function(d) {return xz(d.x); })
+            protGapLine
+                .x(function(d) {return xz(d.x); })
         }
+        g.selectAll(".dot")
+                .attr('cx', function(d) {return xz(d.x)})
+
         d3.selectAll(".protein").attr("d", protLine)
         d3.selectAll(".rna").attr("d", rnaLine)
+        d3.selectAll(".rnagaps").attr("d", rnaGapLine)
+        d3.selectAll(".proteingaps").attr("d", protGapLine)
 
     }
 
     function drawLines(item, index) {
         g = d3.select(".canvas_g")
-        if (item.type == 'rna') {
+        if (item.type == 'rna' || item.type == "dna") {
+
             var currentLine = g.append("path")
              .classed('rna', true)
              .datum(item.profile)
@@ -377,7 +423,7 @@ function drawingProfiles(data, id = ".canvas") {
              .on('mousemove', function(d) {
                 d3.select(".SVGtooltip").classed('SVGhidden', false)
                    .attr('style', 'left:' + (d3.event.clientX + 20) + 'px; top:' + (d3.event.clientY - 20) + 'px; text-align: left;')
-                   .html("<b>"+removeScaleFromName(input.seq[index].name)+"</b><br>" + trimString(scaleDescriptors["rna"][input.seq[index].scale]["name"], 80));
+                   .html("<b>"+removeScaleFromName(input.seq[index].name)+"</b><br>" + trimString(scaleDescriptors[item.type][input.seq[index].scale]["name"], 80));
             })
             .on('mouseout', function() {
                d3.select(".SVGtooltip").classed('SVGhidden', true);
@@ -389,6 +435,30 @@ function drawingProfiles(data, id = ".canvas") {
             } else if (item.linestyle == 'dotted') {
                 currentLine.attr("stroke-dasharray", ("1 " + (Number(item.thickness)*3)));
             }
+
+            g.append("path")
+             .classed('rnagaps', true)
+             .datum(item.profile)
+             .attr("clip-path", "url(#clip)")
+             .attr("fill", "none")
+             .attr("stroke", item.color)
+             .attr("stroke-linejoin", "round")
+             .attr("stroke-linecap", "round")
+             .attr("stroke-width", item.thickness)
+             .attr("d", rnaGapLine)
+             .attr("stroke-dasharray", (item.thickness + " " + (Number(item.thickness)*2)))
+             .on('mousemove', function(d) {
+                d3.select(".SVGtooltip").classed('SVGhidden', false)
+                   .attr('style', 'left:' + (d3.event.clientX + 20) + 'px; top:' + (d3.event.clientY - 20) + 'px; text-align: left;')
+                   .html("<b>"+removeScaleFromName(input.seq[index].name)+"</b><br>some missing values in averaging window");
+            })
+            .on('mouseout', function() {
+               d3.select(".SVGtooltip").classed('SVGhidden', true);
+            })
+
+
+
+
         } else if (item.type == 'protein') {
             var currentLine = g.append("path")
              .classed('protein', true)
@@ -415,21 +485,61 @@ function drawingProfiles(data, id = ".canvas") {
             } else if (item.linestyle == 'dotted') {
                 currentLine.attr("stroke-dasharray", ("1 " + (Number(item.thickness)*3)));
             }
+
+            g.append("path")
+             .classed('proteingaps', true)
+             .datum(item.profile)
+             .attr("clip-path", "url(#clip)")
+             .attr("fill", "none")
+             .attr("stroke", item.color)
+             .attr("stroke-linejoin", "round")
+             .attr("stroke-linecap", "round")
+             .attr("stroke-width", item.thickness)
+             .attr("d", protGapLine)
+             .attr("stroke-dasharray", (item.thickness + " " + (Number(item.thickness)*2)))
+             .on('mousemove', function(d) {
+                d3.select(".SVGtooltip").classed('SVGhidden', false)
+                   .attr('style', 'left:' + (d3.event.clientX + 20) + 'px; top:' + (d3.event.clientY - 20) + 'px; text-align: left;')
+                   .html("<b>"+removeScaleFromName(input.seq[index].name)+"</b><br>some missing values in averaging window");
+            })
+            .on('mouseout', function() {
+               d3.select(".SVGtooltip").classed('SVGhidden', true);
+            })
         }
+
     };
 
     input.seq.forEach(drawLines);
+
     updateCorResults(corList);
     if (document.getElementsByClassName('.correlation-data')) {
         addTable('.correlation-data', data);
     }
-    return "complete";   
+    return "complete";
 };
 
+
+
 var closeModal = function() {
+    var alphabet = {
+        "rna" : /^[AGTUC-]*$/gi,
+        "dna": /^[AGTUC-]*$/gi,
+        "protein": /^[ACDEFGHIKLMNPQRSTVWY-]*$/gi
+    };
+
     var that = $(this)
     if ((data.seq[this.id].scale != "no scale selected") && (data.seq[this.id].scale) && (data.seq[this.id].sequence != "")) {
-        $('#setup' + this.id).modal('hide');
+
+        if (alphabet[data.seq[this.id].type].test(data.seq[this.id].sequence)) {
+             $('#setup' + this.id).modal('hide');
+        }
+        else {
+            $("#setup" + this.id + " .alert_box2").empty();
+            $("#setup" + this.id + " .alert_box2").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Warning</strong> Invalid characters in " + typeNames[data.seq[this.id].type]+" sequence - if retained, these will be treated as gaps</div>");
+            $("#setup" + this.id + " .alert_box").empty();
+            $("#setup" + this.id + " .alert_box").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Warning</strong> Invalid characters in " + typeNames[data.seq[this.id].type]+" sequence - if retained, these will be treated as gaps</div>");
+
+        }
     }
     else {
         that.tooltip('show');
@@ -437,7 +547,23 @@ var closeModal = function() {
             that.tooltip('hide')
         }, 2000);
     }
-    
+
+}
+
+
+
+
+var clickScaleTab = function() {
+    var that = $(this)
+    var i = this.id.split("_")[1]
+
+    if ($("#" + i + ".btn-type").html().trim() == "Type") {
+        that.tooltip('show');
+        setTimeout(function(){
+            that.tooltip('hide')
+        }, 2000);
+    }
+
 }
 
 const Item = ({number}) =>`
@@ -464,15 +590,16 @@ const Item = ({number}) =>`
                                 <a class="nav-link active" data-toggle="tab" href="#sequence${number}">Sequence</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#scale${number}">Scale</a>
+                                <a class="nav-link disabled" data-toggle="tab" data-toggle="tooltip" data-placement="right" id="scaleTab_${number}" title="Please select molecule type before continuing"  data-trigger="manual"  onclick="clickScaleTab.call(this)" href="#scale${number}">Scale</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#visuals${number}">Visuals</a>
                             </li>
                         </ul>
-                    
+
                         <!-- Tab panes -->
                         <div class="tab-content">
+
                             <div id="sequence${number}" class="container tab-pane active"><br>
                                 <textarea class="form-inline" id="${number}" type="text" size="300" style="display: block; width: 100%; height: 8em; resize: none; font-family: 'Source Code Pro', monospace;"></textarea>
 
@@ -487,11 +614,13 @@ const Item = ({number}) =>`
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <div class="dropdown-menu type-selector" id="${number}">
-                                                    <a class="dropdown-item">Protein</a>
-                                                    <a class="dropdown-item">RNA</a>
+                                                    <a class="dropdown-item" id="protein_dropdown_item${number}" >Protein</a>
+                                                    <a class="dropdown-item" id="rna_dropdown_item${number}">RNA</a>
+                                                    <a class="dropdown-item" id="dna_dropdown_item${number}">DNA</a>
+
                                                 </div>
                                             </div>
-                                            <div class="btn-group database-menu" style="float: left;">
+                                            <div class="btn-group database-menu" id="${number}" style="float: left;">
                                                 <button class="btn btn-grey btn-sm btn-label" id="${number}" type="button">
                                                     Database
                                                 </button>
@@ -499,18 +628,18 @@ const Item = ({number}) =>`
                                                     <span class="sr-only">Toggle Dropdown</span>
                                                 </button>
                                                 <div class="dropdown-menu database-selector" id="${number}">
-                                                    <a class="dropdown-item">Uniprot</a>
-                                                    <a class="dropdown-item">ENA</a>
+                                                    <a class="dropdown-item" id="uniprot_dropdown_item${number}">Uniprot</a>
+                                                    <a class="dropdown-item" id="ena_dropdown_item${number}">ENA</a>
                                                 </div>
                                             </div>
                                             <input class="sequence-id-input" id="${number}" style="margin-right: 7px;" type="text" placeholder="Enter sequence ID"/>
                                             <button type="button" class="btn btn-sm btn-blue btn-submit btn-flat" id="${number}" style="float: left;">Go!</button>
                                         </div>
-                                        
+
                                     </div>
                                     <button type="button" class="btn btn-sm btn-red btn-clr btn-flat" id="${number}">Clear</button>
-                                    <button type="button" class="btn btn-sm btn-grey btn-flat" id="${number}" data-toggle="tooltip" data-placement="right" title="Please select a scale and a sequence before continuing" data-trigger="manual" onclick="closeModal.call(this)">Done</button>
-                                    
+                                    <button type="button" class="btn btn-sm btn-blue btn-flat" id="${number}" data-toggle="tooltip" data-placement="right" title="Please select a scale and a sequence before continuing" data-trigger="manual" onclick="closeModal.call(this)">Done</button>
+
                                 </div>
                                 <div class="modal-footer">
                                     <div class="alert_box" style="display: inline-block; width: 100%; min-width: 350px; font-size: 15px"></div>
@@ -530,24 +659,25 @@ const Item = ({number}) =>`
                                         <option value="p_other">Other</option>
                                     </select>
                                     <select class="scaleList" id="${number}" size="10" style="width: 220px; margin-top: 20px;">
-                                        
+
                                     </select>
-            
+
                                 </div>
                                 <div style="width: 65%; height: 90%; min-height: 270px; float: left;">
                                     <div class="scaleDescription" id="${number}" style="font-size: 12px;">
-                                        
+
                                     </div>
                                 </div><br>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-grey btn-flat" id="${number}" data-toggle="tooltip" data-placement="right" title="Please select a scale and a sequence before continuing" data-trigger="manual" onclick="closeModal.call(this)">Done</button>
+                                    <button type="button" class="btn btn-sm btn-blue btn-flat" id="${number}" data-toggle="tooltip" data-placement="right" title="Please select a scale and a sequence before continuing" data-trigger="manual" onclick="closeModal.call(this)">Done</button>
                                 </div>
+                                <div class="alert_box2" style="display: inline-block; width: 100%; min-width: 350px; font-size: 15px"></div>
                             </div>
 
                             <div id="visuals${number}" class="container tab-pane fade"><br>
                                 <div class="box-card">
-                                    <div id="${number}" class="thickness-text" style="width: 100px;">Thickness: 2.0</div>
-                                    <div class="thickness-slider-container" style="display: flex;margin-bottom: 1em;">
+                                    <div id="${number}" class="thickness-text" style="width: 14em;">Thickness: 2.0</div>
+                                    <div class="thickness-slider-container">
                                         <div class="thickness-slider-inner">
                                             <button id="${number}" class="btn btn-sq-xs btn-less-thick">
                                                 <i class="material-icons" md-24>remove</i>
@@ -560,9 +690,9 @@ const Item = ({number}) =>`
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <div style="display:flex;align-items:left; width: 100%;">
-                                        <span class="sliderSwitch-label" style="margin-left: 0px; width: 100px;">Linetype:</span>
-                                        <select class="form-control linestyleSelector" id="${number}" style="width:40%; margin-left: 1em;">
+                                    <div style="display:flex;align-items:center; width: 100%;">
+                                        <span class="sliderSwitch-label" style="margin-left: 0px; margin-top: 0px; width: 14em;">Linetype:</span>
+                                        <select class="form-control linestyleSelector" id="${number}" style="width:40%;">
                                             <option value="solid" selected>Solid</option>
                                             <option value="dashed1">Dashed 1</option>
                                             <option value="dashed2">Dashed 2</option>
@@ -571,14 +701,27 @@ const Item = ({number}) =>`
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-sm btn-grey btn-flat" id="${number}" data-toggle="tooltip" data-placement="right" title="Please select a scale and a sequence before continuing" data-trigger="manual" onclick="closeModal.call(this)">Done</button>
+                                    <div style="display:flex;align-items:center; width: 100%;">
+                                        <span class="min_existing-label" style="margin-left: 0px; width: 14em;">Minimum percentage of existing values in window:</span>
+                                        <div class="input-group" style="width:18%">
+                                            <input class="form-control min_existing-input" style="border-top-right-radius: 0.25rem;border-bottom-right-radius: 0.25rem" id="${number}" type="number" min="0" max="100" step="1" value="0"/>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" style="background-color:#fff; border:none; padding-left:0.45rem" >%</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-blue btn-flat" id="${number}" data-toggle="tooltip" data-placement="right" title="Please select a scale and a sequence before continuing" data-trigger="manual" onclick="closeModal.call(this)">Done</button>
+                                </div>
+                                <div class="alert_box2" style="display: inline-block; width: 100%; min-width: 350px; font-size: 15px"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
 
     </div>
@@ -595,7 +738,7 @@ const Item = ({number}) =>`
                 </button>
             </div>
         </div>
-        
+
         <div id="${number}" class="thirdRow-text">Shift: 0</div>
         <div class="thirdRow-slider">
             <div class="thirdRow-slider-inner">
@@ -629,6 +772,7 @@ data_prototype = {
                   "name" : "",
                   "organism" : "",
                   "thickness" : 2,
+                  "min_existing": 0,
                   "linestyle" : "solid",
                   "color" : "",
                   "active" : true,
@@ -639,7 +783,7 @@ function addInterface() {
     $("#addInterfaceButton").tooltip('hide');
     $("#addInterfaceButton").text("Add additional sequence")
     var div = document.createElement('div');
-    
+
     num = Object.keys(data.seq).length
 
     div.setAttribute('class', 'interfacebox');
@@ -649,13 +793,13 @@ function addInterface() {
 
     data.seq[num] = $.extend(true, {}, data_prototype);
     data.seq[num].sequence = "";
-    
+
     data.seq[num].color = getBiasedColorHSL(num, .60, .60, .2);
-    
+
     data.seq[num].name = "Seq" + (num+1);
     data.seq[num].name = addScaleToName(num,data.seq[num].name)
 
-    
+
 
     document.getElementById('interface_container').appendChild(div);
 
@@ -686,6 +830,7 @@ function addInterface() {
             }
             drawingProfiles(data);
         })
+
         .data('slider');
     });
 
@@ -741,6 +886,10 @@ function addInterface() {
         data.seq[this.id].linestyle = this.value;
         drawingProfiles(data);
     });
+    $('#'+num+' .min_existing-input').on('change', function() {
+        data.seq[this.id].min_existing = Number(this.value)/100;
+        drawingProfiles(data);
+    });
     $("div#"+num+".button").click(function(){
         if($(this).html() == '<i class="material-icons md-24">expand_less</i>'){
             $(this).html('<i class="material-icons md-24">expand_more</i>');
@@ -761,9 +910,9 @@ function addInterface() {
             data.seq[this.id].visible = true;
             drawingProfiles(data);
         }
-        
+
     });
-    
+
     $(".close-button").tooltip();
 
     $("#setup"+num).modal('show');
@@ -777,7 +926,7 @@ function addInterface() {
     $('#'+num+'.selectpicker').on('change', function(){
         createScaleList(this.id, $(this).val(), data.seq[this.id].type);
     });
-    
+
     $('.scaleList').on('change', function(){
         renderScaleDetails(this.id, $(this).val(), data.seq[this.id].type);
         data.seq[this.id].scale = $(this).val();
@@ -800,9 +949,9 @@ function addInterfaceBasedOnData(data) {
         var div = document.createElement('div');
         div.setAttribute('class', 'interfacebox');
         div.setAttribute('id', num);
-        
+
         div.innerHTML = Item({number: num});
-        
+
         document.getElementById('interface_container').appendChild(div);
 
         new jscolor(document.getElementById('colorpicker' + num),
@@ -811,6 +960,22 @@ function addInterfaceBasedOnData(data) {
         $('#'+num+'.name').val(data.seq[num].name);
         $('#'+num+'.name').val(addScaleToName(num,data.seq[num].name));
         $('#'+num+'.scale_label').html(data.seq[num].scale);
+
+        $("#scaleTab_"+num).removeClass("disabled");
+        $("#" + num + ".btn-type").html(trimString(typeNames[data.seq[num].type], 9));
+        $("#" + num + ".btn-type").val(trimString(typeNames[data.seq[num].type], 9));
+
+        if (data.seq[num].type == "protein") {
+            var db = "Uniprot";
+        }
+        else {
+            var db = "ENA";
+        }
+
+        $("#"+num+".database-menu").find('.btn-label').html(db);
+        $("#"+num+".database-menu").find('.btn-label').val(db);
+
+
         addLegend(num);
 
         $("div#"+num+".button").click(function(){
@@ -833,7 +998,7 @@ function addInterfaceBasedOnData(data) {
                 data.seq[this.id].visible = true;
                 drawingProfiles(data);
             }
-            
+
         });
         if (data.seq[num].type == "protein") {
             $("#"+num+".selectpicker").html(`
@@ -851,8 +1016,12 @@ function addInterfaceBasedOnData(data) {
         else if (data.seq[num].type == "rna") {
             $("#"+num+".selectpicker").html(`
                                     <option value="r_comp">Composition</option>
-                                    <option value="r_energy">Energy related</option>
-                                    <option value="r_pchem">general Physico-Chemical</option>
+                                    `)
+            $("#"+num+".selectpicker").selectpicker('refresh')
+        }
+        else if (data.seq[num].type == "dna") {
+            $("#"+num+".selectpicker").html(`
+                                    <option value="d_comp">Composition</option>
                                     `)
             $("#"+num+".selectpicker").selectpicker('refresh')
         }
@@ -864,7 +1033,10 @@ function addInterfaceBasedOnData(data) {
             data.seq[this.id].linestyle = this.value;
             drawingProfiles(data);
         });
-
+        $('#'+num+' .min_existing-input').on('change', function() {
+            data.seq[this.id].min_existing = Number(this.value)/100;
+            drawingProfiles(data);
+        });
         renderScaleDetails(num, data.seq[num].scale, data.seq[num].type);
     }
 
@@ -941,13 +1113,14 @@ function addInterfaceBasedOnData(data) {
             updateLegend(this.id);
         })
     });
-    
+
     $('.scaleList').on('change', function(){
         renderScaleDetails(this.id, $(this).val(), data.seq[this.id].type);
         data.seq[this.id].scale = $(this).val();
         data.seq[this.id].name = addScaleToName(this.id, data.seq[this.id].name);
         $('#'+this.id+'.name').val(data.seq[this.id].name);
         drawingProfiles(data);
+        updateShifts(data)
     });
 
 
@@ -968,7 +1141,7 @@ function updateCorrList(data) {
 }
 
 function updateShifts(data) {
-    $(".shift").slider('setAttribute', 'max', findMaxLength(data.seq)-3);
+    $(".shift").slider('setAttribute', 'max', findMaxLength(data.seq));
     $(".shift").slider('refresh');
     for (var i = data.seq.length - 1; i >= 0; i--) {
         if (data.seq[i].active) {
@@ -988,6 +1161,18 @@ function updateWindows(data) {
     }
 }
 
+function resetScale(id) {
+    $("#"+id+".scaleDescription").html("");
+    createScaleList(id, [], data.seq[id].type)
+    $("#"+id+".selectpicker").val("default")
+    $("#"+id+".selectpicker").selectpicker("refresh")
+    data.seq[id].scale = "no scale selected";
+    data.seq[id].name = "Seq" + (Number(id)+1);
+    data.seq[id].name = addScaleToName(id,data.seq[id].name)
+    $('#'+id+'.name').val(data.seq[id].name);
+
+}
+
 function download_data_Uniprot(id) {
 
     var xhttp = new XMLHttpRequest();
@@ -1004,7 +1189,7 @@ function download_data_Uniprot(id) {
                     response = JSON.parse(xhttp.responseText);
                     data.seq[id].sequence = response.sequence.sequence;
                     $('#'+id+'.form-inline').val(response.sequence.sequence)
-                    
+
                     try {
                         seqName = response.protein.recommendedName.fullName.value;
                     } catch (err) {
@@ -1048,62 +1233,68 @@ function download_data_Uniprot(id) {
     }
     else {
         $("#setup" + id + " .alert_box").empty();
-        $("#setup" + id + " .alert_box").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Value Error:</strong> ID has not the correct length (6 or 8) if an UniprotID " + db_ID + "</div>");
+        $("#setup" + id + " .alert_box").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Value Error:</strong> ID has not the correct length (6 or 8) of an UniprotID " + db_ID + "</div>");
     }
 }
 
 function download_data_ENA(id) {
-
     var xhttp = new XMLHttpRequest();
-    var parser = new DOMParser();
     var db_ID = $('#'+id+'.sequence-id-input').val();
-        
-    var rna_request = "https://www.ebi.ac.uk/ena/data/view/" + db_ID.split('.')[0] + "&display=xml"
+
+    var rna_request = "https://www.ebi.ac.uk/ena/browser/api/fasta/" + db_ID
     xhttp.open("GET", rna_request, true);
-    xhttp.setRequestHeader("Content-type", "text/xml");
+    xhttp.setRequestHeader("Content-type", "text/plain");
     xhttp.onload = function (e) {
         if (xhttp.readyState === 4) {
             if (xhttp.status === 200) {
                 try {
-                    RNA_response = parser.parseFromString(xhttp.responseText, "text/xml");
-                    RNA = RNA_response.getElementsByTagName("sequence")[0].childNodes[0].nodeValue;
-                    RNA = RNA.replace(/\s/g,'');
-                    RNA = RNA.toUpperCase();
-                    RNA = RNA.replace(/T/g,'U');
+                    RNA_response = xhttp.responseText;
+                    RNA = parseFASTA(RNA_response)
+
+
+                    if (data.seq[id].type == "rna") {
+                        RNA = RNA.replace(/T/g,'U');
+                        $("#"+id+".selectpicker").html(`
+                                        <option value="r_comp">Composition</option>
+                                        `)
+                    }
+                    else {
+                        $("#"+id+".selectpicker").html(`
+                                        <option value="d_comp">Composition</option>
+                                        `)
+                    }
+                    $("#"+id+".selectpicker").selectpicker('refresh')
 
                     data.seq[id].sequence = RNA;
                     $('#'+id+'.form-inline').val(RNA);
-                    
-                    data.seq[id].type = 'rna';
+
                     data.seq[id].window = 21;
                     data.seq[id].name = addScaleToName(id,db_ID);
                     
                     $('#'+id+'.name').val(data.seq[id].name);
 
-                    $("#"+id+".selectpicker").html(`
-                                        <option value="r_comp">Composition</option>
-                                        <option value="r_energy">Energy related</option>
-                                        <option value="r_pchem">general Physico-Chemical</option>
-                                        `)
-                    $("#"+id+".selectpicker").selectpicker('refresh')
-
+                 
                     drawingProfiles(data);
                     updateShifts(data);
+                  
                 }
                 catch(e) {
                     $("#setup" + id + " .alert_box").empty();
                     $("#setup" + id + " .alert_box").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Value Error</strong> could not locate given ID in the European Nucleotide Archive (" + db_ID + ")</div>");
+                  
                 }
             }
             else {
                 $("#setup" + id + " .alert_box").empty();
                 $("#setup" + id + " .alert_box").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Value Error</strong> could not locate given ID in the European Nucleotide Archive (" + db_ID + ")</div>");
+               
             }
         }
     };
     xhttp.onerror = function (e) {
         $("#setup" + id + " .alert_box").empty();
         $("#setup" + id + " .alert_box").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Value Error</strong> could not locate given ID in the European Nucleotide Archive (" + db_ID + ")</div>");
+         
     };
     xhttp.send();
 }

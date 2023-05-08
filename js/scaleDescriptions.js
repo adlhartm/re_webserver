@@ -4536,46 +4536,199 @@ var scaleDescriptors = {
             "name": "RF rank (Zimmerman et al., 1968)",
             "summary": "The characterization of amino acid sequences in proteins by statistical methods"
         },
-        "ADE-affinity" : {
+        "ADE-affinity (knowledge-based)" : {
             "PMID": "23868089",
             "aaIndexID": "",
             "author": "Polyansky A.A., Zagrovic B.",
             "journal": "Nucleic Acids Res. 2013 Oct;41(18):8434-43",
-            "name": "Adenine affinity",
+            "name": "Adenine affinity (knowledge-based)",
             "summary": "Affinity for the nucleobase adenine derived from crystal structures"
         },
-        "CYT-affinity" : {
+        "CYT-affinity (knowledge-based)" : {
             "PMID": "23868089",
             "aaIndexID": "",
             "author": "Polyansky A.A., Zagrovic B.",
             "journal": "Nucleic Acids Res. 2013 Oct;41(18):8434-43",
-            "name": "Cytosine affinity",
+            "name": "Cytosine affinity (knowledge-based)",
             "summary": "Affinity for the nucleobase cytosine derived from crystal structures"
         },
-        "GUA-affinity" : {
+        "GUA-affinity (knowledge-based)" : {
             "PMID": "23868089",
             "aaIndexID": "",
             "author": "Polyansky A.A., Zagrovic B.",
             "journal": "Nucleic Acids Res. 2013 Oct;41(18):8434-43",
-            "name": "Guanine affinity",
+            "name": "Guanine affinity (knowledge-based)",
             "summary": "Affinity for the nucleobase guanine derived from crystal structures"
         },
-        "URA-affinity" : {
+        "URA-affinity (knowledge-based)" : {
             "PMID": "23868089",
             "aaIndexID": "",
             "author": "Polyansky A.A., Zagrovic B.",
             "journal": "Nucleic Acids Res. 2013 Oct;41(18):8434-43",
-            "name": "Uracil affinity",
+            "name": "Uracil affinity (knowledge-based)",
             "summary": "Affinity for the nucleobase uracil derived from crystal structures"
         },
-        "PUR-affinity" : {
+        "PUR-affinity (knowledge-based)" : {
             "PMID": "23868089",
             "aaIndexID": "",
             "author": "Polyansky A.A., Zagrovic B.",
             "journal": "Nucleic Acids Res. 2013 Oct;41(18):8434-43",
-            "name": "Purine affinity",
+            "name": "Purine affinity (knowledge-based)",
             "summary": "Affinity for purine nucleobases derived from crystal structures"
         },
+        "ADE-affinity (MD, water)" : {
+            "PMID": "25550435",
+            "aaIndexID": "",
+            "author": "de Ruiter A., Zagrovic B.",
+            "journal": "Nucleic Acids Res. 2015 Jan;43(2):708-18",
+            "name": "Adenine affinity (MD, water)",
+            "summary": "Absolute binding free energies between the nucleobase adenine and amino-acid side chain analogs in water, derived from molecular dynamics simulations and umbrella sampling"
+        },
+        "CYT-affinity (MD, water)" : {
+            "PMID": "25550435",
+            "aaIndexID": "",
+            "author": "de Ruiter A., Zagrovic B.",
+            "journal": "Nucleic Acids Res. 2015 Jan;43(2):708-18",
+            "name": "Cytosine affinity (MD, water)",
+            "summary": "Absolute binding free energies between the nucleobase cytosine and amino-acid side chain analogs in water, derived from molecular dynamics simulations and umbrella sampling"
+        },
+        "GUA-affinity (MD, water)" : {
+            "PMID": "25550435",
+            "aaIndexID": "",
+            "author": "de Ruiter A., Zagrovic B.",
+            "journal": "Nucleic Acids Res. 2015 Jan;43(2):708-18",
+            "name": "Guanine affinity (MD, water)",
+            "summary": "Absolute binding free energies between the nucleobase guanine and amino-acid side chain analogs in water, derived from molecular dynamics simulations and umbrella sampling"
+        },
+        "URA-affinity (MD, water)" : {
+            "PMID": "25550435",
+            "aaIndexID": "",
+            "author": "de Ruiter A., Zagrovic B.",
+            "journal": "Nucleic Acids Res. 2015 Jan;43(2):708-18",
+            "name": "Uracil affinity (MD, water)",
+            "summary": "Absolute binding free energies between the nucleobase uracil and amino-acid side chain analogs in water, derived from molecular dynamics simulations and umbrella sampling"
+        },
+        "THY-affinity (MD, water)" : {
+            "PMID": "25550435",
+            "aaIndexID": "",
+            "author": "de Ruiter A., Zagrovic B.",
+            "journal": "Nucleic Acids Res. 2015 Jan;43(2):708-18",
+            "name": "Thymine affinity (MD, water)",
+            "summary": "Absolute binding free energies between the nucleobase thymine and amino-acid side chain analogs in water, derived from molecular dynamics simulations and umbrella sampling"
+        },
+        "ADE-affinity (MD, methanol)" : {
+            "PMID": "25550435",
+            "aaIndexID": "",
+            "author": "de Ruiter A., Zagrovic B.",
+            "journal": "Nucleic Acids Res. 2015 Jan;43(2):708-18",
+            "name": "Adenine affinity (MD, methanol)",
+            "summary": "Absolute binding free energies between the nucleobase adenine and amino-acid side chain analogs in methanol, derived from molecular dynamics simulations and umbrella sampling"
+        },
+        "CYT-affinity (MD, methanol)" : {
+            "PMID": "25550435",
+            "aaIndexID": "",
+            "author": "de Ruiter A., Zagrovic B.",
+            "journal": "Nucleic Acids Res. 2015 Jan;43(2):708-18",
+            "name": "Cytosine affinity (MD, methanol)",
+            "summary": "Absolute binding free energies between the nucleobase cytosine and amino-acid side chain analogs in methanol, derived from molecular dynamics simulations and umbrella sampling"
+        },
+        "GUA-affinity (MD, methanol)" : {
+            "PMID": "25550435",
+            "aaIndexID": "",
+            "author": "de Ruiter A., Zagrovic B.",
+            "journal": "Nucleic Acids Res. 2015 Jan;43(2):708-18",
+            "name": "Guanine affinity (MD, methanol)",
+            "summary": "Absolute binding free energies between the nucleobase guanine and amino-acid side chain analogs in methanol, derived from molecular dynamics simulations and umbrella sampling"
+        },
+        "URA-affinity (MD, methanol)" : {
+            "PMID": "25550435",
+            "aaIndexID": "",
+            "author": "de Ruiter A., Zagrovic B.",
+            "journal": "Nucleic Acids Res. 2015 Jan;43(2):708-18",
+            "name": "Uracil affinity (MD, methanol)",
+            "summary": "Absolute binding free energies between the nucleobase uracil and amino-acid side chain analogs in methanol, derived from molecular dynamics simulations and umbrella sampling"
+        },
+        "THY-affinity (MD, methanol)" : {
+            "PMID": "25550435",
+            "aaIndexID": "",
+            "author": "de Ruiter A., Zagrovic B.",
+            "journal": "Nucleic Acids Res. 2015 Jan;43(2):708-18",
+            "name": "Thymine affinity (MD, methanol)",
+            "summary": "Absolute binding free energies between the nucleobase thymine and amino-acid side chain analogs in methanol, derived from molecular dynamics simulations and umbrella sampling"
+        },
+
+         "HPA-affinity (MD, methanol)" : {
+            "PMID": "27093234",
+            "aaIndexID": "",
+            "author": "Hajnic M., de Ruiter A., Polyansky A.A., Zagrovic B.",
+            "journal": "J Am Chem Soc. 2016 May;138(17):5519-22",
+            "name": "Hypoxanthine affinity (MD, methanol)",
+            "summary": "Absolute binding free energies between the inosine nucleobase hypoxanthine and amino-acid side chain analogs in methanol, derived from molecular dynamics simulations and umbrella sampling"
+        },
+
+         "HPA-affinity (MD, water)" : {
+            "PMID": "27093234",
+            "aaIndexID": "",
+            "author": "Hajnic M., de Ruiter A., Polyansky A.A., Zagrovic B.",
+            "journal": "J Am Chem Soc. 2016 May;138(17):5519-22",
+            "name": "Hypoxanthine affinity (MD, water)",
+            "summary": "Absolute binding free energies between the inosine nucleobase hypoxanthine and amino-acid side chain analogs in water, derived from molecular dynamics simulations and umbrella sampling"
+        },
+
+         "5mC-affinity (MD, water)" : {
+            "PMID": "36380112",
+            "aaIndexID": "",
+            "author": "Hajnic M., Alonso-Gil S., Polyansky A.A., de Ruiter A., Zagrovic B.",
+            "journal": "Sci Rep. 2022 Nov;12(1):19583",
+            "name": "5-methylcytosine affinity (MD, water)",
+            "summary":"Absolute binding free energies between the modified nucleobase 5-methylcytosine and amino-acid side chains in water, derived from molecular dynamics simulations and umbrella sampling"
+        },
+
+         "5hmC-affinity (MD, water)" : {
+            "PMID": "36380112",
+            "aaIndexID": "",
+            "author": "Hajnic M., Alonso-Gil S., Polyansky A.A., de Ruiter A., Zagrovic B.",
+            "journal": "Sci Rep. 2022 Nov;12(1):19583",
+            "name": "5-hydroxymethylcytosine affinity (MD, water)",
+            "summary":"Absolute binding free energies between the modified nucleobase 5-hydroxymethylcytosine and amino-acid side chains in water, derived from molecular dynamics simulations and umbrella sampling"
+        },
+
+         "m6A-affinity (MD, water)" : {
+            "PMID": "36380112",
+            "aaIndexID": "",
+            "author": "Hajnic M., Alonso-Gil S., Polyansky A.A., de Ruiter A., Zagrovic B.",
+            "journal": "Sci Rep. 2022 Nov;12(1):19583",
+            "name": "N<sup>6</sup>-methyladenine affinity (MD, water)",
+            "summary":"Absolute binding free energies between the modified nucleobase N<sup>6</sup>-methyladenine and amino-acid side chains in water, derived from molecular dynamics simulations and umbrella sampling"
+        },
+
+         "5mC-affinity (MD, methanol)" : {
+            "PMID": "36380112",
+            "aaIndexID": "",
+            "author": "Hajnic M., Alonso-Gil S., Polyansky A.A., de Ruiter A., Zagrovic B.",
+            "journal": "Sci Rep. 2022 Nov;12(1):19583",
+            "name": "5-methylcytosine affinity (MD, methanol)",
+            "summary":"Absolute binding free energies between the modified nucleobase 5-methylcytosine and amino-acid side chains in methanol, derived from molecular dynamics simulations and umbrella sampling"
+        },
+
+         "5hmC-affinity (MD, methanol)" : {
+            "PMID": "36380112",
+            "aaIndexID": "",
+            "author": "Hajnic M., Alonso-Gil S., Polyansky A.A., de Ruiter A., Zagrovic B.",
+            "journal": "Sci Rep. 2022 Nov;12(1):19583",
+            "name": "5-hydroxymethylcytosine affinity (MD, methanol)",
+            "summary":"Absolute binding free energies between the modified nucleobase 5-hydroxymethylcytosine and amino-acid side chains in methanol, derived from molecular dynamics simulations and umbrella sampling"
+        },
+
+         "m6A-affinity (MD, methanol)" : {
+            "PMID": "36380112",
+            "aaIndexID": "",
+            "author": "Hajnic M., Alonso-Gil S., Polyansky A.A., de Ruiter A., Zagrovic B.",
+            "journal": "Sci Rep. 2022 Nov;12(1):19583",
+            "name": "N<sup>6</sup>-methyladenine affinity (MD, methanol)",
+            "summary":"Absolute binding free energies between the modified nucleobase N<sup>6</sup>-methyladenine and amino-acid side chains in methanol, derived from molecular dynamics simulations and umbrella sampling"
+        },
+
         // "PYR" : {
         //     "PMID": "23868089",
         //     "aaIndexID": "",
@@ -5155,6 +5308,72 @@ var scaleDescriptors = {
             "journal": "J Mol Evol 11(3), 199-210 (1978)",
             "name": "Retention factors for dinucleoside monophosphate",
             "summary": ""
+        }
+    },
+    "dna": {
+        "ADE-content" : {
+            "PMID": "",
+            "aaIndexID": "",
+            "author": "",
+            "journal": "",
+            "name": "Adenine composition",
+            "summary": "Base composition in respect to Adenine bases"
+        },
+        "CYT-content" : {
+            "PMID": "",
+            "aaIndexID": "",
+            "author": "",
+            "journal": "",
+            "name": "Cytosine composition",
+            "summary": "Base composition in respect to Cytosine bases"
+        },
+        "GUA-content" : {
+            "PMID": "",
+            "aaIndexID": "",
+            "author": "",
+            "journal": "",
+            "name": "Guanine composition",
+            "summary": "Base composition in respect to Guanine bases"
+        },
+        "THY-content" : {
+            "PMID": "",
+            "aaIndexID": "",
+            "author": "",
+            "journal": "",
+            "name": "Thymine composition",
+            "summary": "Base composition in respect to Thymine bases"
+        },
+        "PUR-content" : {
+            "PMID": "",
+            "aaIndexID": "",
+            "author": "",
+            "journal": "",
+            "name": "Purine composition",
+            "summary": "Base composition in respect to Purine bases"
+        },
+        "PYR-content" : {
+            "PMID": "",
+            "aaIndexID": "",
+            "author": "",
+            "journal": "",
+            "name": "Pyrimidine composition",
+            "summary": "Base composition in respect to Pyrimidine bases"
+        },
+        "GC-content" : {
+            "PMID": "",
+            "aaIndexID": "",
+            "author": "",
+            "journal": "",
+            "name": "GC composition",
+            "summary": "Base composition in respect to Guanine and Cytosine bases"
+        },
+        "AT-content" : {
+            "PMID": "",
+            "aaIndexID": "",
+            "author": "",
+            "journal": "",
+            "name": "AT composition",
+            "summary": "Base composition in respect to Adenine and Thymine bases"
         }
     }
 }

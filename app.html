@@ -7,16 +7,10 @@
 
     <title>VOLPES - Application</title>
     <meta name="description" content="VOLPES - Visualization of Physicochemical Sequences">
-    <meta name="application-name" content="VOLPES">
+    <meta name="author" content="Lukas Bartonek">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="img/icon/apple-touch-icon.png?v=2">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/icon/favicon-32x32.png?v=2">
-    <link rel="icon" type="image/png" sizes="16x16" href="img/icon/favicon-16x16.png?v=2">
-    <link rel="manifest" href="img/icon/site.webmanifest?v=2">
-    <link rel="mask-icon" href="img/icon/safari-pinned-tab.svg?v=2" color="#5bbad5">
-    <link rel="shortcut icon" href="img/icon/favicon.ico?v=2">
     <meta name="msapplication-TileColor" content="#00aba9">
     <meta name="msapplication-config" content="img/icon/browserconfig.xml?v=2">
     <meta name="theme-color" content="#ffffff">
@@ -52,10 +46,6 @@
     <script src="js/volpiniLib.js"></script>
     <script src="js/scaleProperties.js"></script>
     <script src="js/scaleDescriptions.js"></script>
-    <!-- <script src="js/affLib.js"></script>
-    <script src="js/profile-lib.js"></script>
-    <script src="js/scales.js"></script> -->
-    <!-- <script src="js/aaindex.js"></script> -->
     <script src="js/FileSaver.min.js"></script>
     <script src="js/saveSvgAsPng.js"></script>
 
@@ -97,7 +87,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="examples/hydrophobicity.html">protein hydrophobicity profile</a>
-                                <a class="dropdown-item" href="examples/cognate.html">cognate mRNA/protein pair</a>
+                                <a class="dropdown-item" href="examples/cognate.html">autogenous mRNA/protein pair</a>
                                 <a class="dropdown-item" href="examples/charge.html">pH dependence of protein charge</a>
                             </div>
                         </li>
@@ -173,7 +163,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-sm btn-grey btn-flat" id="corr_close" data-dismiss="modal">Done</button>
+                            <button type="button" class="btn btn-sm btn-blue btn-flat" id="corr_close" data-dismiss="modal">Done</button>
                         </div>                        
                     </div>
                 </div>
@@ -190,7 +180,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4>Export Interface</h5>
+                    <h4>Export</h5>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -212,8 +202,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-grey btn-flat" id="corr_close" data-dismiss="modal">Done</button>
-                </div> 
+                    <button type="button" class="btn btn-sm btn-blue btn-flat" id="corr_close" data-dismiss="modal">Done</button>
+                </div>
             </div>
         </div>
     </div>
@@ -240,13 +230,12 @@
                     </label><span class="sliderSwitch-label">Invert y2-axis</span><br>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-grey btn-flat" id="corr_close" data-dismiss="modal">Done</button>
+                    <button type="button" class="btn btn-sm btn-blue btn-flat" id="corr_close" data-dismiss="modal">Done</button>
                 </div>                 
             </div>
         </div>
     </div>
    
-    <!-- <script src="js/profile_helper.js"></script> -->
     <script src="js/volpini.js"></script>
     <script type="text/javascript">
       data = {
@@ -306,6 +295,8 @@
         // insert the sequence into the text field
         $('.form-inline').each(function(element, value) {
             $(this).val(data.seq[this.id].sequence);
+
+
         });
         // redraw the graph upon changes in the sequence text field
         $('.form-inline').each(function(element, value) {
@@ -313,10 +304,10 @@
                 data.seq[this.id].sequence = this.value;
                 drawingProfiles(data);
                 updateShifts(data);
-            });    
+            });
         });
-        
-        
+
+
         // editing the name of sequences
         $('.name').each(function(element, value) {
             $(this).on("change", function() {
@@ -324,7 +315,20 @@
                 updateLegend(this.id);
             })
         });
-        
+
+
+
+        $(document).on('close.bs.alert', '.alert_box', function () {
+            $(".alert_box").empty()
+            $(".alert_box2").empty()
+
+        });
+
+        $(document).on('close.bs.alert', '.alert_box2', function () {
+            $(".alert_box").empty()
+            $(".alert_box2").empty()
+
+        });
 
         // seleceting scales in the main interface
         $(document).on('click', '.scale-selector a', function() {
@@ -334,14 +338,39 @@
             drawingProfiles(data);
             updateLegend(cur_id);
         })
-        
+
 
         // selecting different types of polymers
         $(document).on('click', '.type-selector a', function() {
             i = $(this).parent().attr('id');
-            data.seq[i].type = this.text.toLowerCase();
+            var mol_type = this.text.toLowerCase();
+            var mol_type_old = data.seq[i].type;
+            data.seq[i].type = mol_type
             $("#" + i + ".btn-type").html(trimString(typeNames[data.seq[i].type], 9));
-            if (this.text.toLowerCase()=="protein") {
+
+
+            // click database button, if not already correct
+            if (mol_type == "protein" && ($("#"+i+".btn-label").val() != "Uniprot")) {
+                $("#uniprot_dropdown_item"+i).click();
+
+            }
+            else if (mol_type == "rna" && ($("#"+i+".btn-label").val() != "ENA")) {
+                $("#ena_dropdown_item"+i).click();
+            }
+            else if (mol_type == "dna" && ($("#"+i+".btn-label").val() != "ENA")) {
+                $("#ena_dropdown_item"+i).click();
+            }
+
+            // reset scale tab and selection when molecule type changes
+            if (mol_type_old != mol_type) {
+                resetScale(i)
+
+            }
+
+            // activate scale tab
+            $("#scaleTab_"+i).removeClass("disabled");
+
+            if (mol_type=="protein") {
                 $("#"+i+".selectpicker").html(`
                                         <option value="p_alpha">Alpha-propensity</option>
                                         <option value="p_beta">Beta-propensity</option>
@@ -354,15 +383,22 @@
                                         `)
                 $("#"+i+".selectpicker").selectpicker('refresh')
             }
-            else if (this.text.toLowerCase()=="rna") {
+            else if (mol_type=="rna") {
                 $("#"+i+".selectpicker").html(`
                                         <option value="r_comp">Composition</option>
                                         `)
                 $("#"+i+".selectpicker").selectpicker('refresh')
             }
+            else if (mol_type=="dna") {
+                $("#"+i+".selectpicker").html(`
+                                        <option value="d_comp">Composition</option>
+                                        `)
+                $("#"+i+".selectpicker").selectpicker('refresh')
+            }
+
             drawingProfiles(data);
         })
-        
+
          // selecting the correlation partner
          $(document).on('click', '.corr-selector a', function() {
             corList[$(this).parent().attr('id')] = this.id;
@@ -373,7 +409,7 @@
         $(document).on('click', '.btn-more-wndw', function() {
             curVal = $("#"+this.id+".prot-window").data('slider').getValue();
             if (curVal < 63) { // magic number - CHANGE!!!
-                curVal += 1;
+                curVal += 2;
                 $("#"+this.id+".prot-window").data('slider').setValue(curVal);
                 data.seq[this.id].window = curVal;
                 $("#"+this.id+".firstRow-text").text("Window: " + curVal);
@@ -383,7 +419,7 @@
         $(document).on('click', '.btn-less-wndw', function() {
             curVal = $("#"+this.id+".prot-window").data('slider').getValue();
             if (curVal > 1) { // magic number - CHANGE!!!
-                curVal -= 1;
+                curVal -= 2;
                 $("#"+this.id+".prot-window").data('slider').setValue(curVal);
                 data.seq[this.id].window = curVal;
                 $("#"+this.id+".firstRow-text").text("Window: " + curVal);
@@ -429,7 +465,7 @@
                 drawingProfiles(data);
             }
         })
-        
+
 
         // deal with clicks on submit button in database interface
         $(document).on('click', '.btn-submit', function() {
@@ -437,7 +473,7 @@
                 download_data_Uniprot(this.id);
             }
             else if ($('#'+this.id+'.btn-label').val() == "ENA") {
-                download_data_ENA(this.id);   
+                download_data_ENA(this.id);
             }
             else {
                 $("#setup" + this.id + " .alert_box").empty();
@@ -451,7 +487,7 @@
                     download_data_Uniprot(this.id);
                 }
                 else if ($('#'+this.id+'.btn-label').val() == "ENA") {
-                    download_data_ENA(this.id);   
+                    download_data_ENA(this.id);
                 }
                 else {
                     $("#setup" + this.id + " .alert_box").empty();
@@ -465,12 +501,25 @@
             data.seq[this.id].sequence = "";
             drawingProfiles(data);
         })
-        
+
 
         // switch label and value of dropdown database selector
         $(document).on('click', '.database-selector a', function() {
-            $(this).parents('.database-menu').find('.btn-label').html($(this).text());
-            $(this).parents('.database-menu').find('.btn-label').val($(this).text());
+            var db = $(this).text();
+            var i = $(this).parent().attr('id');
+
+            $("#"+i+".database-menu").find('.btn-label').html(db);
+            $("#"+i+".database-menu").find('.btn-label').val(db);
+
+            // click button for corresponding molecule type if not already correctly selected
+            if (db == "ENA" && !(["RNA", "DNA"].includes($("#"+i+".btn-type").text()))) {
+                $("#rna_dropdown_item"+i).click();
+
+            }
+            else if (db == "Uniprot" && !(["Protein"].includes($("#"+i+".btn-type").text()))) {
+                $("#protein_dropdown_item"+i).click();
+            }
+
         })
         
 

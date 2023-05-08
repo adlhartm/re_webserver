@@ -2,29 +2,102 @@ var emptyScale = {'protein' : {'A': 0, 'C': 0, 'D': 0, 'E': 0, 'F': 0,
                                'G': 0, 'H': 0, 'I': 0, 'K': 0, 'L': 0,
                                'M': 0, 'N': 0, 'P': 0, 'Q': 0, 'R': 0,
                                'S': 0, 'T': 0, 'V': 0, 'W': 0, 'Y': 0},
-                  'rna' :     {'A': 0, 'C': 0, 'G': 0, 'U': 0, 'T': 0}};
+                  'rna' :     {'A': 0, 'C': 0, 'G': 0, 'U': 0, 'T': 0},
+                  'dna' :     {'A': 0, 'C': 0, 'G': 0, 'U': 0, 'T': 0}};
 
-var scale = {'protein' : {   
-                    'ADE-affinity' : {'A': -0.10, 'C': -0.24, 'D': -0.06, 'E':  0.03, 'F': -0.16,
+var scale = {'protein' : {
+                    'ADE-affinity (knowledge-based)' : {'A': -0.10, 'C': -0.24, 'D': -0.06, 'E':  0.03, 'F': -0.16,
                              'G':  0.16, 'H':  0.21, 'I': -0.06, 'K':  0.06, 'L': -0.09,
                              'M': -0.09, 'N':  0.21, 'P': -0.19, 'Q':  0.19, 'R':  0.05,
                              'S': -0.07, 'T': -0.16, 'V': -0.13, 'W': -0.35, 'Y': -0.06},
-                    'CYT-affinity' : {'A': -0.17, 'C':  0.46, 'D':  0.01, 'E':  0.46, 'F': -0.06,
+                    'CYT-affinity (knowledge-based)' : {'A': -0.17, 'C':  0.46, 'D':  0.01, 'E':  0.46, 'F': -0.06,
                              'G':  0.11, 'H': -0.17, 'I': -0.02, 'K':  0.09, 'L':  0.11,
                              'M': -0.09, 'N':  0.44, 'P': -0.09, 'Q': -0.03, 'R':  0.01,
                              'S': -0.36, 'T': -0.36, 'V':  0.15, 'W':  0.42, 'Y':  0.06},
-                    'GUA-affinity' : {'A':  0.16, 'C':  0.01, 'D':  0.05, 'E': -0.29, 'F':  0.48,
+                    'GUA-affinity (knowledge-based)' : {'A':  0.16, 'C':  0.01, 'D':  0.05, 'E': -0.29, 'F':  0.48,
                              'G': -0.18, 'H':  0.14, 'I':  0.17, 'K': -0.19, 'L':  0.18,
                              'M': -0.14, 'N': -0.23, 'P':  0.10, 'Q': -0.09, 'R': -0.06,
                              'S':  0.17, 'T':  0.27, 'V':  0.11, 'W':  0.09, 'Y':  0.26},
-                    'URA-affinity' : {'A':  0.13, 'C': -0.01, 'D':  0.01, 'E':  0.04, 'F': -0.17,
+                    'URA-affinity (knowledge-based)' : {'A':  0.13, 'C': -0.01, 'D':  0.01, 'E':  0.04, 'F': -0.17,
                              'G': -0.03, 'H': -0.20, 'I': -0.08, 'K':  0.10, 'L': -0.15,
                              'M':  0.45, 'N': -0.22, 'P':  0.24, 'Q': -0.07, 'R':  0.01,
                              'S':  0.32, 'T':  0.36, 'V': -0.08, 'W':  0.09, 'Y': -0.22},
-                    'PUR-affinity' : {'A':  0.02, 'C': -0.13, 'D': -0.01, 'E': -0.15, 'F':  0.11,
+                    'PUR-affinity (knowledge-based)' : {'A':  0.02, 'C': -0.13, 'D': -0.01, 'E': -0.15, 'F':  0.11,
                              'G': -0.02, 'H':  0.18, 'I':  0.05, 'K': -0.07, 'L':  0.03,
                              'M': -0.12, 'N': -0.03, 'P': -0.06, 'Q':  0.04, 'R': -0.01,
                              'S':  0.04, 'T':  0.03, 'V': -0.02, 'W': -0.16, 'Y':  0.09},
+                    'ADE-affinity (MD, water)' : {'A': 0.2, 'C': -1.2, 'D': 0.5, 'E': 2.0, 'F': -3.3,
+                             'G': NaN, 'H': -0.7, 'I': -2.8, 'K':  0.9, 'L': -2.0,
+                             'M': -2.5, 'N': -1.0, 'P': NaN, 'Q': -2.0, 'R': -0.8,
+                             'S':  0.3, 'T': -0.5, 'V': -1.5, 'W': -3.8, 'Y': -3.9},
+                    'CYT-affinity (MD, water)' : {'A': 0.9, 'C': -0.2, 'D': 2.4, 'E': 1.6, 'F': -2.7,
+                             'G': NaN, 'H': 0.0, 'I': -1.9, 'K':  1.4, 'L': -1.9,
+                             'M': -1.4, 'N': -0.7, 'P': NaN, 'Q': -0.5, 'R': -1.1,
+                             'S':  1.1, 'T':  0.6, 'V': -1.2, 'W': -3.6, 'Y': -3.3},
+                    'GUA-affinity (MD, water)' : {'A': 1.0, 'C': -0.9, 'D': 1.0, 'E': -0.3, 'F': -3.6,
+                             'G': NaN, 'H': -0.6, 'I': -2.6, 'K': -0.5, 'L': -2.6,
+                             'M': -2.2, 'N': -0.6, 'P': NaN, 'Q': -2.2, 'R': -1.2,
+                             'S':  1.1, 'T':  0.2, 'V': -1.4, 'W': -4.8, 'Y': -5.1},
+                    'URA-affinity (MD, water)' : {'A': 0.4, 'C': -0.8, 'D': 2.8, 'E': 2.2, 'F': -3.1,
+                             'G': NaN, 'H':  0.5, 'I': -1.5, 'K':  0.6, 'L': -1.8,
+                             'M': -2.1, 'N': -0.7, 'P': NaN, 'Q': -1.5, 'R': -0.5,
+                             'S':  0.5, 'T': -0.2, 'V': -1.0, 'W': -4.8, 'Y': -3.3},
+                    'THY-affinity (MD, water)' : {'A': 0.3, 'C': -0.6, 'D': 3.7, 'E': 3.7, 'F': -3.9,
+                             'G': NaN, 'H':  0.2, 'I': -1.6, 'K':  0.9, 'L': -1.7,
+                             'M': -2.3, 'N': -0.7, 'P': NaN, 'Q': -1.9, 'R':  0.3,
+                             'S': -0.4, 'T': -0.7, 'V': -1.1, 'W': -6.1, 'Y': -4.3},
+                    'ADE-affinity (MD, methanol)' : {'A': 1.2, 'C': 0.4, 'D': 1.8, 'E': 2.3, 'F': -0.7,
+                             'G': NaN, 'H':  0.8, 'I':  0.7, 'K':  3.0, 'L':  0.1,
+                             'M': -0.3, 'N':  0.5, 'P': NaN, 'Q':  0.8, 'R':  2.8,
+                             'S':  1.1, 'T':  0.4, 'V':  0.1, 'W': -1.2, 'Y':  0.1},
+                    'CYT-affinity (MD, methanol)' : {'A': 2.5, 'C': 0.8, 'D': -1.9, 'E': -1.6, 'F': 0.8,
+                             'G': NaN, 'H': -1.7, 'I':  1.3, 'K': -0.1, 'L':  0.2,
+                             'M':  1.2, 'N':  1.1, 'P': NaN, 'Q':  0.8, 'R':  0.8,
+                             'S':  2.4, 'T':  1.8, 'V':  1.3, 'W': -0.2, 'Y': -0.3},
+                    'GUA-affinity (MD, methanol)' : {'A': 3.0, 'C': 1.7, 'D': -6.4, 'E': -7.0, 'F': -0.1,
+                             'G': NaN, 'H': -1.9, 'I':  1.2, 'K': -1.0, 'L':  1.7,
+                             'M': -1.0, 'N':  2.0, 'P': NaN, 'Q':  1.4, 'R': -1.7,
+                             'S':  3.2, 'T':  2.6, 'V':  1.9, 'W': -0.6, 'Y': -0.1},
+                    'URA-affinity (MD, methanol)' : {'A': 1.3, 'C': 1.1, 'D': 3.0, 'E': 3.2, 'F': -0.6,
+                             'G': NaN, 'H':  0.5, 'I': -0.3, 'K':  1.7, 'L':  0.8,
+                             'M': -0.3, 'N':  1.4, 'P': NaN, 'Q':  0.8, 'R':  1.1,
+                             'S':  2.0, 'T':  1.5, 'V': 0.0, 'W':  0.1, 'Y': -0.7},
+                    'THY-affinity (MD, methanol)' : {'A': 0.9, 'C': 1.5, 'D': 5.3, 'E': 4.7, 'F': 1.8,
+                             'G': NaN, 'H':  1.0, 'I': 0.0, 'K':  2.2, 'L':  0.1,
+                             'M': -0.9, 'N':  1.2, 'P': NaN, 'Q':  1.4, 'R':  0.9,
+                             'S':  3.0, 'T':  2.8, 'V': 0.0, 'W': -0.9, 'Y': -1.0},
+                    'HPA-affinity (MD, water)' : {'A': 0.4, 'C': -1.2, 'D': 0.7, 'E': -0.2, 'F': -3.1,
+                             'G': NaN, 'H': -0.9, 'I': -2.1, 'K': -0.5, 'L': -2.1,
+                             'M': -2.0, 'N': -0.9, 'P': NaN, 'Q': -1.5, 'R': -1.3,
+                             'S':  0.5, 'T': -0.5, 'V': -1.6, 'W': -4.9, 'Y': -3.8},
+                    'HPA-affinity (MD, methanol)' : {'A': 1.1, 'C': 0.6, 'D': -7.8, 'E': -8.9, 'F': -0.1,
+                             'G': NaN, 'H': -1.6, 'I': -0.2, 'K': -1.5, 'L':  0.6,
+                             'M': -0.3, 'N':  0.8, 'P': NaN, 'Q':  0.6, 'R': -0.3,
+                             'S':  1.4, 'T':  1.2, 'V':  0.6, 'W': -0.8, 'Y': -0.7},
+                    '5mC-affinity (MD, water)' : {'A': 0.4, 'C': -1.2, 'D': 3.9, 'E': 3.3, 'F': -3.0,
+                             'G': NaN, 'H': -0.8, 'I': -2.1, 'K': -0.2, 'L': -1.9,
+                             'M': -2.4, 'N': -0.9, 'P': NaN, 'Q': -1.0, 'R': -1.3,
+                             'S': -0.1, 'T': -1.0, 'V': -1.6, 'W': -4.3, 'Y': -3.9},
+                    '5hmC-affinity (MD, water)' : {'A': -0.5, 'C': -0.7, 'D': 1.3, 'E': 0.6, 'F': -3.5,
+                             'G': NaN, 'H': -0.8, 'I': -2.2, 'K': -0.4, 'L': -2.0,
+                             'M': -2.5, 'N': -1.4, 'P': NaN, 'Q': -1.4, 'R': -2.0,
+                             'S':  1.1, 'T': -0.9, 'V': -1.4, 'W': -4.8, 'Y': -4.2},
+                    'm6A-affinity (MD, water)' : {'A': 0.6, 'C': -0.7, 'D': 1.9, 'E': 2.3, 'F': -3.4,
+                             'G': NaN, 'H': -0.4, 'I': -1.8, 'K': -0.7, 'L': -2.0,
+                             'M': -2.9, 'N': -2.4, 'P': NaN, 'Q': -1.9, 'R': -1.7,
+                             'S':  0.9, 'T': -0.5, 'V': -2.1, 'W': -5.2, 'Y': -5.1},
+                    '5mC-affinity (MD, methanol)' : {'A': 0.9, 'C': 0.9, 'D': 3.0, 'E': 1.5, 'F': -0.7,
+                             'G': NaN, 'H': -1.1, 'I':  1.6, 'K': -0.7, 'L':  0.4,
+                             'M':  0.5, 'N':  1.2, 'P': NaN, 'Q':  0.7, 'R': -0.7,
+                             'S':  2.0, 'T':  2.0, 'V':  0.4, 'W': -1.2, 'Y': -0.5},
+                    '5hmC-affinity (MD, methanol)' : {'A': 1.1, 'C': 0.6, 'D': -4.0, 'E': -3.2, 'F': 1.5,
+                             'G': NaN, 'H': -0.9, 'I':  0.6, 'K': -0.7, 'L':  0.6,
+                             'M':  0.9, 'N':  1.1, 'P': NaN, 'Q':  1.0, 'R': -1.3,
+                             'S':  1.3, 'T':  0.9, 'V':  0.4, 'W':  0.1, 'Y': -0.2},
+                    'm6A-affinity (MD, methanol)' : {'A': 1.8, 'C': 0.4, 'D': 2.9, 'E': 3.2, 'F': -0.3,
+                             'G': NaN, 'H':  2.1, 'I':  0.2, 'K':  2.8, 'L':  0.8,
+                             'M': -0.3, 'N':  1.0, 'P': NaN, 'Q':  1.1, 'R':  2.0,
+                             'S':  2.1, 'T':  1.4, 'V':  0.7, 'W': -0.5, 'Y': -0.2},
                     'FAC1': {'A': -0.59, 'C': -1.34, 'D':  1.05, 'E':  1.36, 'F': -1.01,
                              'G':  0.38, 'H':  0.34, 'I': -1.24, 'K':  1.83, 'L': -1.02,
                              'M': -0.66, 'N':  0.95, 'P':  0.19, 'Q':  0.93, 'R':  1.54,
@@ -46,27 +119,27 @@ var scale = {'protein' : {
                 //              'G':  0.39, 'H': -0.62, 'I':  0.68, 'K': -0.69, 'L':  0.94,
                 //              'M':  0.29, 'N': -0.36, 'P':  0.48, 'Q': -0.27, 'R': -1.21,
                 //              'S':  0.19, 'T':  0.07, 'V':  0.61, 'W': -0.48, 'Y': -0.83},
-                    'Charge': 
+                    'Charge':
                             {'A': 0, 'C': 0, 'D': -1, 'E': -1, 'F': 0,
                              'G': 0, 'H': 0.1, 'I': 0, 'K': 1, 'L': 0,
                              'M': 0, 'N': 0, 'P': 0, 'Q': 0, 'R': 1,
                              'S': 0, 'T': 0, 'V': 0, 'W': 0, 'Y': 0},
-                //     'voro003_ADE' : 
+                //     'voro003_ADE' :
                 //             {"C": -0.767, "D": 0.232, "S": -0.089, "Q": 0.075, "K": 0.266,
                 //              "I": -0.263, "P": 0.066, "T": -0.223, "F": -0.136, "N": 0.350,
                 //              "G": 0.200, "H": -0.147, "L": -0.267, "R": -0.007, "W": 0.206,
                 //              "A": -0.013, "V": 0.092, "E": 0.237, "Y": 0.027, "M": -0.202},
-                //     'voro003_CYT' : 
+                //     'voro003_CYT' :
                 //             {"C": 1.374, "D": -0.330, "S": -0.054, "Q": 0.043, "K": -0.255,
                 //              "I": 0.182, "P": -0.247, "T": -0.076, "F": 0.210, "N": 0.492,
                 //              "G": 0.038, "H": 0.335, "L": 0.283, "R": -0.204, "W": -0.476,
                 //              "A": -0.186, "V": 0.042, "E": 0.022, "Y": 0.271, "M": -0.077},
-                //     'voro003_GUA' : 
+                //     'voro003_GUA' :
                 //             {"C": 0.546, "D": -0.318, "S": -0.127, "Q": 0.109, "K": -0.083,
                 //              "I": 0.405, "P": 0.120, "T": 0.079, "F": 0.517, "N": 0.107,
                 //              "G": -0.300, "H": -0.007, "L": 0.224, "R": -0.030, "W": -0.301,
                 //              "A": 0.206, "V": 0.159, "E": -0.530, "Y": -0.027, "M": -0.243},
-                //     'voro003_URA' : 
+                //     'voro003_URA' :
                 //             {"C": 0.751, "D": 0.304, "S": 0.263, "Q": -0.163, "K": -0.041,
                 //              "I": -0.029, "P": -0.030, "T": 0.268, "F": -0.229, "N": -0.448,
                 //              "G": 0.077, "H": 0.043, "L": 0.047, "R": 0.145, "W": 0.452,
@@ -13072,7 +13145,7 @@ var scale = {'protein' : {
                         "V" : 0.0,
                         "W" : 0.0,
                         "Y" : -1.0
-                    }                    
+                    }
                 },
                 'rna' : {
                     'ADE-content' : {'A': 1, 'C': 0, 'G': 0, 'U': 0, 'T': 0},
@@ -13122,6 +13195,19 @@ var scale = {'protein' : {
                     'log-odds preference of unpaired conformations for RNP vs nonRNP Gupta2011' : {'A': 0.5824, 'C': 0.5870, 'G': 0.3324, 'U': 1.0314, 'T': 1.0314},
                     'fraction of unpaired residues Kirillova2011' : {'A': 0.486, 'C': 0.201, 'G': 0.231, 'U': 0.3887, 'T': 0.3887},
                     'Rf values dinucleoside monophosphate Weber1978' : {'A': 0.023, 'C': 0.349, 'G': 0.065, 'U': 0.389, 'T': 0.389}
+                },
+                'dna' : {
+                    'ADE-content' : {'A': 1, 'C': 0, 'G': 0, 'U': 0, 'T': 0},
+                    'CYT-content' : {'A': 0, 'C': 1, 'G': 0, 'U': 0, 'T': 0},
+                    'GUA-content' : {'A': 0, 'C': 0, 'G': 1, 'U': 0, 'T': 0},
+                    'THY-content' : {'A': 0, 'C': 0, 'G': 0, 'U': 1, 'T': 1},
+                    'PUR-content' : {'A': 1, 'C': 0, 'G': 1, 'U': 0, 'T': 0},
+                    'PYR-content' : {'A': 0, 'C': 1, 'G': 0, 'U': 1, 'T': 1},
+                    'GC-content' : {'A': 0, 'C': 1, 'G': 1, 'U': 0, 'T': 0},
+                    'AT-content' : {'A': 1, 'C': 0, 'G': 0, 'U': 1, 'T': 1},
+                    'no scale selected' : {'A': 0, 'C': 0, 'G': 0, 'U': 0, 'T': 0},
+                },
+                '' : {'no scale selected' : {'A': 0, 'C': 0, 'G': 0, 'U': 0, 'T': 0},
                 }
             }
 
@@ -13143,7 +13229,7 @@ code =          {'UUU':'F', 'UUC':'F', 'UUA':'L', 'UUG':'L',
                  'GGU':'G', 'GGC':'G', 'GGA':'G', 'GGG':'G'}
 
 var scaleNames = {
-        'protein' : {   
+        'protein' : {
                 'ADE-affinity' : 'ADE-affinity (NAR2013)',
                 'CYT-affinity' : 'CYT-affinity (NAR2013)',
                 'GUA-affinity' : 'GUA-affinity (NAR2013)',
@@ -13177,7 +13263,7 @@ var typeNames = {
 }
 
 var classification = {
-    "p_rnaAf"  : ['ADE-affinity', 'CYT-affinity', 'GUA-affinity', 'URA-affinity', 'PUR-affinity'],
+    "p_rnaAf"  : ['ADE-affinity (knowledge-based)', 'CYT-affinity (knowledge-based)', 'GUA-affinity (knowledge-based)', 'URA-affinity (knowledge-based)', 'PUR-affinity (knowledge-based)', 'ADE-affinity (MD, methanol)', 'CYT-affinity (MD, methanol)', 'GUA-affinity (MD, methanol)', 'URA-affinity (MD, methanol)', 'THY-affinity (MD, methanol)','ADE-affinity (MD, water)', 'CYT-affinity (MD, water)', 'GUA-affinity (MD, water)', 'URA-affinity (MD, water)', 'THY-affinity (MD, water)', 'HPA-affinity (MD, methanol)', 'HPA-affinity (MD, water)', '5mC-affinity (MD, methanol)', '5mC-affinity (MD, water)', '5hmC-affinity (MD, methanol)', '5hmC-affinity (MD, water)', 'm6A-affinity (MD, methanol)', 'm6A-affinity (MD, water)', 'WOEC730101' ],
     "p_alpha"  : ['BEGF750101','BEGF750103','BUNA790101','BUNA790103','BURA740101','CHAM830101','CHAM830102','CHOP780101','CHOP780201','CHOP780203','CHOP780205', 'CHOP780207','CHOP780210','CHOP780211','CHOP780212','CHOP780213','CHOP780215','CHOP780216','CRAJ730101','CRAJ730103','FASG760103','FASG760104','FAUJ880113','FINA770101','FINA910102','GEIM800101','GEIM800102','GEIM800103','GEIM800104','GEIM800108','GEIM800109','GEIM800111','ISOY800101','ISOY800103','ISOY800104','ISOY800106','KANM800101','KANM800103','LEVM780101','LEVM780103','LEVM780104','LEVM780106','LEWP710101','MAXF760101','MAXF760106','NAGK730101','NAGK730103','PALJ810101','PALJ810102','PALJ810105','PALJ810106','PALJ810107','PALJ810108','PALJ810109','PALJ810113','PALJ810114','PALJ810115','PALJ810116','PRAM900102','PRAM900104','PTIO830101','QIAN880101','QIAN880102','QIAN880103','QIAN880104','QIAN880105','QIAN880106','QIAN880107','QIAN880108','QIAN880109','QIAN880110','QIAN880111','QIAN880112','QIAN880113','QIAN880117','QIAN880129','QIAN880130','QIAN880131','QIAN880132','QIAN880133','QIAN880134','QIAN880135','QIAN880136','QIAN880137','QIAN880138','QIAN880139','RACS820104','RACS820108','RACS820110','RACS820112','RACS820114','RICJ880107','RICJ880109','RICJ880110','RICJ880112','RICJ880113','RICJ880114','RICJ880116','RICJ880117','ROBB760101','ROBB760103','ROBB760104','ROBB760107','ROBB760108','ROBB760109','ROBB760110','ROBB760111','ROBB760112','ROBB760113','SNEP660101','SNEP660104','SUEM840101','TANS770101','TANS770102','TANS770104','TANS770110','VASM830101','WOLS870103','AURR980101','AURR980102','AURR980108','AURR980109','AURR980110','AURR980111','AURR980112','AURR980113','AURR980114','AURR980115','AURR980117','AURR980118','AURR980120','AVBF000102','BLAM930101','CORJ870105','CORJ870106','CORJ870108','FAC2','FAC3','FODM020101','GEOR030101','GEOR030102','GEOR030104','GEOR030106','GEOR030109','KARS160118','KOEP990101','MUNV940101','MUNV940102','set2pC','set2pPUR','set2pPYR'],
     "p_beta"   : ['BURA740102','CHAM830107','CHOP780202','CHOP780208','CHOP780209','CRAJ730102','GEIM800105','GEIM800106','GEIM800107','GEIM800110','ISOY800102','KANM800102','KANM800104','LEVM780102','LEVM780105','LIFS790101','LIFS790102','LIFS790103','MAXF760102','NAGK730102','OOBM850101','OOBM850104','PALJ810103','PALJ810104','PALJ810110','PALJ810112','PRAM900103','PTIO830102','QIAN880118','QIAN880119','QIAN880120','QIAN880121','QIAN880122','RACS820111','ROBB760105','ROBB760106','TANS770103','AURR980103','AURR980119','AVBF000101','AVBF000105','AVBF000108','KIMC930101','MUNV940103','MUNV940104','MUNV940105','PARS000102','set2pG'],
     'p_charge' : ['charge_pH0','charge_pH1','charge_pH2','charge_pH3','charge_pH4','charge_pH5','charge_pH5.5','charge_pH6','charge_pH6.2','charge_pH6.4','charge_pH6.6','charge_pH6.8','charge_pH7','charge_pH7.2','charge_pH7.4','charge_pH7.6','charge_pH7.8','charge_pH8','charge_pH8.5','charge_pH9','charge_pH10','charge_pH11','charge_pH12','charge_pH13','charge_pH14'],
@@ -13187,8 +13273,12 @@ var classification = {
     'p_other' : ['CHAM810101','CHAM830104','CHOP780206','CHOP780214','FAUJ880102','FAUJ880107','ISOY800105','ISOY800108','LEVM760103','LEVM760104','MAXF760103','MAXF760104','MAXF760105','PRAM820102','PRAM820103','RACS820102','RACS820106','RACS820107','RACS820109','RACS820113','RICJ880101','RICJ880102','RICJ880103','RICJ880115','TANS770105','TANS770107','TANS770109','WERD780102','AURR980116','AVBF000103','AVBF000104','AVBF000107','GEOR030108','KARS160119','NADH010107','ONEK900101','set2pA'],
     'r_comp' : ['ADE-content','CYT-content','GUA-content','URA-content','PUR-content','PYR-content','GC-content','AU-content','fraction of contacts on the protein-RNA interface Hoffman2004','fraction of contacts (arcsin(p^-2))on the protein-RNA interface Treger2001','fraction of contacts base-sidechain on the protein-RNA interface Gupta2011'],
     'r_energy' : ['dG chx-wat Shih1998','waterSFE AMBER Miller1996','waterSFE OPLS/FEP Elcock1993','waterSFE SM5.4/A Giesen1997','waterSFE AM1-MST Orozco1996','waterSFE 6-31G*-MST Orozco1996','chloroformSFE CS1 Eksterowicz1997','chloroformSFE CS2 Eksterowicz1997','chloroformSFE OPLS/FEP Orozco1996','chloroformSFE SM5.4/A Giesen1997','chloroformSFE AM1-MST Orozco1996','chloroformSFE 6-31G*-MST Orozco1996','logPclrm/wat CS1 Eksterowicz1997','logPclrm/wat CS2 Eksterowicz1997','logPclrm/wat OPLS/FEP Orozco1996','logPclrm/wat SM5.4/A Giesen1997','logPclrm/wat AM1-MST Orozco1996','logPclrm/wat 6-31G*-MST Orozco1996','mhp-sum'],
-    'r_pchem' : ['nuTP weigths','knoweledge-based SASA','knoweledge-based contact SASA with AA','logP n-but Leo1971','logP oct(calc) Leo1971','Water-affinities chloroform Cullis1981','Water-affinities 2-butanol Cullis1981','sasa absolute nmrset','sasa exposed nmrset','AA binding efficiency 1+','AA binding efficiency 2+','AA binding efficiency 2','log-odds preference of unpaired conformations for RNP vs nonRNP Gupta2011',,'fraction of unpaired residues Kirillova2011',,'Rf values dinucleoside monophosphate Weber1978']
+    'r_pchem' : ['nuTP weigths','knoweledge-based SASA','knoweledge-based contact SASA with AA','logP n-but Leo1971','logP oct(calc) Leo1971','Water-affinities chloroform Cullis1981','Water-affinities 2-butanol Cullis1981','sasa absolute nmrset','sasa exposed nmrset','AA binding efficiency 1+','AA binding efficiency 2+','AA binding efficiency 2','log-odds preference of unpaired conformations for RNP vs nonRNP Gupta2011',,'fraction of unpaired residues Kirillova2011',,'Rf values dinucleoside monophosphate Weber1978'],
+    'd_comp' : ['ADE-content','CYT-content','GUA-content','THY-content','PUR-content','PYR-content','GC-content','AT-content']
 }
 Object.keys(classification).forEach(function(key) {
-    classification[key].sort();
+    // leave order of RNA affinity scales as given
+    if (key != "p_rnaAf") {
+        classification[key].sort();
+    }
 });
