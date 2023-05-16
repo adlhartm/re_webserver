@@ -530,14 +530,13 @@ var closeModal = function() {
     var that = $(this)
     if ((data.seq[this.id].scale != "no scale selected") && (data.seq[this.id].scale) && (data.seq[this.id].sequence != "")) {
 
-        if (alphabet[data.seq[this.id].type].test(data.seq[this.id].sequence)) {
+        if (alphabet[data.seq[this.id].type].test(data.seq[this.id].sequence) || data.seq[this.id].warning == false) {
              $('#setup' + this.id).modal('hide');
         }
         else {
-            $("#setup" + this.id + " .alert_box2").empty();
-            $("#setup" + this.id + " .alert_box2").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Warning</strong> Invalid characters in " + typeNames[data.seq[this.id].type]+" sequence - if retained, these will be treated as gaps</div>");
-            $("#setup" + this.id + " .alert_box").empty();
-            $("#setup" + this.id + " .alert_box").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Warning</strong> Invalid characters in " + typeNames[data.seq[this.id].type]+" sequence - if retained, these will be treated as gaps</div>");
+                $("#setup" + this.id + " .alert_box2").empty();
+                $("#setup" + this.id + " .alert_box2").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Warning</strong> Invalid characters in " + typeNames[data.seq[this.id].type]+" sequence - if retained, these will be treated as gaps</div>");
+
 
         }
     }
@@ -642,7 +641,8 @@ const Item = ({number}) =>`
 
                                 </div>
                                 <div class="modal-footer">
-                                    <div class="alert_box" style="display: inline-block; width: 100%; min-width: 350px; font-size: 15px"></div>
+                                    <div class="alert_box"></div>
+                                    <div class="alert_box2"></div>
                                 </div>
                             </div>
 
@@ -776,7 +776,8 @@ data_prototype = {
                   "linestyle" : "solid",
                   "color" : "",
                   "active" : true,
-                  "visible" : true
+                  "visible" : true,
+                  "warning" : true
                 }
 
 function addInterface() {
@@ -870,6 +871,7 @@ function addInterface() {
 
     $('.form-inline').each(function(element, value) {
         $(this).bind('input propertychange', function() {
+            data.seq[this.id].warning = true
             data.seq[this.id].sequence = parseFASTA(this.value);
             drawingProfiles(data);
             updateShifts(data);
