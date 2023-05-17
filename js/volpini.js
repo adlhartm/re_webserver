@@ -173,6 +173,9 @@ function drawingProfiles(data, id = ".canvas") {
     input.seq = data.seq.filter(function (n) {
         return n.visible && n.active;
     });
+
+    console.log("input length:",input.seq.length)
+
     d3.selectAll("svg > *").remove();
     d3.selectAll("#SVGholder > div").remove();
     var tooltip = d3.select('#SVGholder').append('div')
@@ -259,13 +262,13 @@ function drawingProfiles(data, id = ".canvas") {
 
         if (data.y1_reverse) {
             padding1 = (y1_min - y1_max)*0.1;
-            var gap_line_position_protein = y1_min + padding1*0.8
+            var gap_line_position_protein = y1_min + padding1*0.4
             var y1 = d3.scaleLinear()
                         .domain([y1_max - padding1, y1_min + padding1])
                         .rangeRound([height, 0]);
         } else {
             var padding1 = (y1_max - y1_min)*0.1;
-            var gap_line_position_protein = y1_max + padding1*0.8
+            var gap_line_position_protein = y1_max + padding1*0.4
             var y1 = d3.scaleLinear()
                     .domain([y1_min - padding1, y1_max + padding1])
                     .rangeRound([height, 0]);
@@ -277,12 +280,6 @@ function drawingProfiles(data, id = ".canvas") {
             .x(function(d) {return x1(d.x); })
             .y(function(d) {return y1(d.y); })
             .defined(function(d) {return !isNaN(d.y);});
-
-        var protGapLine  = d3.line()
-            .x(function(d) {return x1(d.x); })
-            .y(function(d) {return y1(gap_line_position_protein); })
-            .defined(function(d) {return (d.w != 1 && !isNaN(d.y));});
-
 
 
         var gY1 = g.append("g")
@@ -324,13 +321,13 @@ function drawingProfiles(data, id = ".canvas") {
 
         if (data.y2_reverse) {
             padding2 = (y2_min - y2_max)*0.1;
-            var gap_line_position_rna = y2_min + padding2*0.8
+            var gap_line_position_rna = y2_min + padding2*0.4
             var y2 = d3.scaleLinear()
                         .domain([y2_max - padding2, y2_min + padding2])
                         .rangeRound([height, 0]);
         } else {
             var padding2 = (y2_max - y2_min)*0.1;
-            var gap_line_position_rna = y2_max + padding2*0.8
+            var gap_line_position_rna = y2_max + padding2*0.4
 
             var y2 = d3.scaleLinear()
                         .domain([y2_min - padding2, y2_max + padding2])
@@ -344,11 +341,7 @@ function drawingProfiles(data, id = ".canvas") {
             .y(function(d) {return y2(d.y); })
             .defined(function(d) {return (!isNaN(d.y));})
             ;
-        var rnaGapLine  = d3.line()
-            .x(function(d) {return x1(d.x); })
-            .y(function(d) {return y2(gap_line_position_rna); })
-            .defined(function(d) {return (d.w != 1 && !isNaN(d.y));})
-            ;
+
 
 
         var gY2 = g.append("g")
@@ -372,6 +365,35 @@ function drawingProfiles(data, id = ".canvas") {
         }
     }
 
+    var count = 0
+    var GapLine = []
+
+    for (let i = 0; i < input.seq.length; i++) {
+
+        if (input.seq[i].type == "protein") {
+            var l = d3.line()
+                .x(function(d) {return x1(d.x); })
+                .y(function(d) {return y1(gap_line_position_protein + (i%4)*padding1*0.15); })
+                .defined(function(d) {return (d.w != 1 && !isNaN(d.y));})
+        }
+        else {
+            var l = d3.line()
+                .x(function(d) {return x1(d.x); })
+                .y(function(d) {return y2(gap_line_position_rna+  (i%4)*padding2*0.15); })
+                .defined(function(d) {return (d.w != 1 && !isNaN(d.y));})
+        }
+
+
+        if (hasGaps(input.seq[i].profile)) {
+            count +=1;
+        }
+
+        GapLine.push(l);
+
+
+    }
+    console.log(GapLine, GapLine.length)
+
     var zoom = d3.zoom()
                  .scaleExtent([0.25, 8])
                  .translateExtent([[-width, -height], [2 * width, 2 *height]])
@@ -387,26 +409,27 @@ function drawingProfiles(data, id = ".canvas") {
         if (input.seq.map(function(d) {return d["type"]}).includes("rna") || (input.seq.map(function(d) {return d["type"]}).includes("dna") )) {
             rnaLine
                 .x(function(d) {return xz(d.x); })
-            rnaGapLine
-                .x(function(d) {return xz(d.x); })
         }
         if (input.seq.map(function(d) {return d["type"]}).includes("protein")) {
             protLine
                 .x(function(d) {return xz(d.x); })
-            protGapLine
-                .x(function(d) {return xz(d.x); })
         }
-        g.selectAll(".dot")
-                .attr('cx', function(d) {return xz(d.x)})
+        for (let i = 0; i < input.seq.length; i++) {
+                GapLine[i]
+                    .x(function(d) {return xz(d.x); })
+        }
 
         d3.selectAll(".protein").attr("d", protLine)
         d3.selectAll(".rna").attr("d", rnaLine)
-        d3.selectAll(".rnagaps").attr("d", rnaGapLine)
-        d3.selectAll(".proteingaps").attr("d", protGapLine)
+
+        for (let i = 0; i < input.seq.length; i++) {
+            d3.selectAll(".gapline"+i).attr("d", GapLine[i])
+        }
 
     }
 
     function drawLines(item, index) {
+        console.log("drawing index", index)
         g = d3.select(".canvas_g")
         if (item.type == 'rna' || item.type == "dna") {
 
@@ -437,7 +460,7 @@ function drawingProfiles(data, id = ".canvas") {
             }
 
             g.append("path")
-             .classed('rnagaps', true)
+             .classed('gapline'+index, true)
              .datum(item.profile)
              .attr("clip-path", "url(#clip)")
              .attr("fill", "none")
@@ -445,7 +468,7 @@ function drawingProfiles(data, id = ".canvas") {
              .attr("stroke-linejoin", "round")
              .attr("stroke-linecap", "round")
              .attr("stroke-width", item.thickness)
-             .attr("d", rnaGapLine)
+             .attr("d", GapLine[index])
              .attr("stroke-dasharray", (item.thickness + " " + (Number(item.thickness)*2)))
              .on('mousemove', function(d) {
                 d3.select(".SVGtooltip").classed('SVGhidden', false)
@@ -487,7 +510,7 @@ function drawingProfiles(data, id = ".canvas") {
             }
 
             g.append("path")
-             .classed('proteingaps', true)
+             .classed('gapline'+index, true)
              .datum(item.profile)
              .attr("clip-path", "url(#clip)")
              .attr("fill", "none")
@@ -495,7 +518,7 @@ function drawingProfiles(data, id = ".canvas") {
              .attr("stroke-linejoin", "round")
              .attr("stroke-linecap", "round")
              .attr("stroke-width", item.thickness)
-             .attr("d", protGapLine)
+             .attr("d", GapLine[index])
              .attr("stroke-dasharray", (item.thickness + " " + (Number(item.thickness)*2)))
              .on('mousemove', function(d) {
                 d3.select(".SVGtooltip").classed('SVGhidden', false)
@@ -535,9 +558,10 @@ var closeModal = function() {
         }
         else {
                 $("#setup" + this.id + " .alert_box2").empty();
-                $("#setup" + this.id + " .alert_box2").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>Warning</strong> Invalid characters in " + typeNames[data.seq[this.id].type]+" sequence - if retained, these will be treated as gaps</div>");
-
-
+                $("#setup" + this.id + " .alert_box2").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close btn-ok' data-dismiss='alert' aria-hidden='true'>OK</button><strong>Warning</strong> Invalid characters in " + typeNames[data.seq[this.id].type]+" sequence - if retained, these will be treated as gaps</div>");
+                $("#setup" + this.id + " .alert_box").empty();
+                $("#setup" + this.id + " .alert_box").append("<div class='alert alert-danger alert-dismissable'><button type='button' class='close btn-ok' data-dismiss='alert' aria-hidden='true'>OK</button><strong>Warning</strong> Invalid characters in " + typeNames[data.seq[this.id].type]+" sequence - if retained, these will be treated as gaps</div>");
+                data.seq[this.id].warning = false
         }
     }
     else {
@@ -641,13 +665,13 @@ const Item = ({number}) =>`
 
                                 </div>
                                 <div class="modal-footer">
-                                    <div class="alert_box"></div>
-                                    <div class="alert_box2"></div>
+                                    <div class="alert_box" style="display: inline-block; width: 100%; min-width: 350px; font-size: 15px"></div>
+
                                 </div>
                             </div>
 
                             <div id="scale${number}" class="container tab-pane fade"><br>
-                                <div style="width: 35%; height: 90%; float: left;">
+                                <div style="width: 38%; height: 90%; float: left;">
                                     <select class="selectpicker" id="${number}" multiple>
                                         <option value="p_alpha">Alpha-propensity</option>
                                         <option value="p_beta">Beta-propensity</option>
@@ -658,12 +682,12 @@ const Item = ({number}) =>`
                                         <option value="p_rnaAf">RNA-Affinity</option>
                                         <option value="p_other">Other</option>
                                     </select>
-                                    <select class="scaleList" id="${number}" size="10" style="width: 220px; margin-top: 20px;">
+                                    <select class="scaleList" id="${number}" size="10" style="width: 240px; margin-top: 20px;">
 
                                     </select>
 
                                 </div>
-                                <div style="width: 65%; height: 90%; min-height: 270px; float: left;">
+                                <div style="width: 62%; height: 90%; min-height: 270px; float: left;">
                                     <div class="scaleDescription" id="${number}" style="font-size: 12px;">
 
                                     </div>
@@ -671,7 +695,9 @@ const Item = ({number}) =>`
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-sm btn-blue btn-flat" id="${number}" data-toggle="tooltip" data-placement="right" title="Please select a scale and a sequence before continuing" data-trigger="manual" onclick="closeModal.call(this)">Done</button>
                                 </div>
-                                <div class="alert_box2" style="display: inline-block; width: 100%; min-width: 350px; font-size: 15px"></div>
+                                <div style = "padding-left: 1rem; padding-right: 1rem;">
+                                    <div class="alert_box2" style="display: inline-block; width: 100%; min-width: 350px; font-size: 15px"></div>
+                                </div>
                             </div>
 
                             <div id="visuals${number}" class="container tab-pane fade"><br>
@@ -714,7 +740,9 @@ const Item = ({number}) =>`
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-sm btn-blue btn-flat" id="${number}" data-toggle="tooltip" data-placement="right" title="Please select a scale and a sequence before continuing" data-trigger="manual" onclick="closeModal.call(this)">Done</button>
                                 </div>
-                                <div class="alert_box2" style="display: inline-block; width: 100%; min-width: 350px; font-size: 15px"></div>
+                                <div style = "padding-left: 1rem; padding-right: 1rem;">
+                                    <div class="alert_box2" style="display: inline-block; width: 100%; min-width: 350px; font-size: 15px"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -921,6 +949,7 @@ function addInterface() {
 
     $("#setup"+num).on('hidden.bs.modal', function() {
         $("#setup"+num + " .alert_box").empty();
+        $("#setup"+num + " .alert_box2").empty();
     });
 
     $('#'+num+'.selectpicker').selectpicker('refresh');

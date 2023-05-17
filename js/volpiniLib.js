@@ -137,6 +137,15 @@ function getUniqueFromArray(array) {
     return a;
 }
 
+function hasGaps(profile) {
+    for (var i=0; i<profile.length; i++) {
+        if (profile[i].w != 1) {
+            return true
+        };
+    };
+    return false
+}
+
 function findMin(dat, type) {
     tmplst = []
     for (var i=0; i<dat.length; i++) {

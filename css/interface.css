@@ -463,6 +463,12 @@ fieldset[disabled] .btn-red.active {
           border-radius: 0 !important;
 }
 
+.btn-ok {
+    font-size: 1.2rem;
+    margin-top: 0.15rem;
+
+}
+
 .tooltip-inner {
 	background-color: rgb(223, 223, 223);
 	color: black;
