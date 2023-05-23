@@ -623,7 +623,7 @@ const Item = ({number}) =>`
                         <div class="tab-content">
 
                             <div id="sequence${number}" class="container tab-pane active"><br>
-                                <textarea class="form-inline" id="${number}" type="text" size="300" style="display: block; width: 100%; height: 8em; resize: none; font-family: 'Source Code Pro', monospace;"></textarea>
+                                <textarea class="form-inline" id="${number}" type="text" size="300" style="display: block; width: 100%; height: 8em; resize: none; font-family: 'Source Code Pro', monospace; word-break: break-all;"></textarea>
 
                                 <div class="modal-footer">
                                     <div style="display:flex;align-items:center;justify-content: space-between; width: 100%;">

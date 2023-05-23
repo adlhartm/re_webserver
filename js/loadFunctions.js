@@ -303,6 +303,11 @@ $('#exportModal').on('shown.bs.modal', function(){
     setOptionsList();
 });
 
+$("#setup"+num).on('hidden.bs.modal', function() {
+        $("#setup"+num + " .alert_box").empty();
+        $("#setup"+num + " .alert_box2").empty();
+ });
+
 $('.selectpicker').on('change', function(){
     createScaleList(this.id, $(this).val());
 });
