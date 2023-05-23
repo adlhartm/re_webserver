@@ -46,6 +46,7 @@ $('.form-inline').each(function(element, value) {
 // redraw the graph upon changes in the sequence text field
 $('.form-inline').each(function(element, value) {
     $(this).bind('input propertychange', function() {
+        data.seq[this.id].warning = true;
         data.seq[this.id].sequence = this.value;
         drawingProfiles(data);
         updateShifts(data);
@@ -108,7 +109,8 @@ $(document).on('click', '.type-selector a', function() {
 
     // reset scale tab and selection when molecule type changes
     if (mol_type_old != mol_type) {
-        resetScale(i)
+        resetScale(i);
+        data.seq[i].warning = true;
 
     }
 

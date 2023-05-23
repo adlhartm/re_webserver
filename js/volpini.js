@@ -174,8 +174,6 @@ function drawingProfiles(data, id = ".canvas") {
         return n.visible && n.active;
     });
 
-    console.log("input length:",input.seq.length)
-
     d3.selectAll("svg > *").remove();
     d3.selectAll("#SVGholder > div").remove();
     var tooltip = d3.select('#SVGholder').append('div')
@@ -365,34 +363,35 @@ function drawingProfiles(data, id = ".canvas") {
         }
     }
 
-    var count = 0
-    var GapLine = []
+    let count = 0;
+    var GapLine = [];
 
     for (let i = 0; i < input.seq.length; i++) {
 
         if (input.seq[i].type == "protein") {
+            let tmp = count
             var l = d3.line()
                 .x(function(d) {return x1(d.x); })
-                .y(function(d) {return y1(gap_line_position_protein + (i%4)*padding1*0.15); })
+                .y(function(d) {return y1(gap_line_position_protein + (tmp%4)*padding1*0.15); })
                 .defined(function(d) {return (d.w != 1 && !isNaN(d.y));})
+          
         }
         else {
+            let tmp = count
             var l = d3.line()
                 .x(function(d) {return x1(d.x); })
-                .y(function(d) {return y2(gap_line_position_rna+  (i%4)*padding2*0.15); })
+                .y(function(d) {return y2(gap_line_position_rna+  (tmp%4)*padding2*0.15); })
                 .defined(function(d) {return (d.w != 1 && !isNaN(d.y));})
         }
 
-
+       
         if (hasGaps(input.seq[i].profile)) {
-            count +=1;
+             count +=1;
         }
 
         GapLine.push(l);
-
-
     }
-    console.log(GapLine, GapLine.length)
+
 
     var zoom = d3.zoom()
                  .scaleExtent([0.25, 8])
@@ -429,7 +428,7 @@ function drawingProfiles(data, id = ".canvas") {
     }
 
     function drawLines(item, index) {
-        console.log("drawing index", index)
+
         g = d3.select(".canvas_g")
         if (item.type == 'rna' || item.type == "dna") {
 

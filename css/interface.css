@@ -651,3 +651,8 @@ div.database-menu {
 	margin-top: 0.5em;
 	margin-bottom: 2.5em;
 }
+
+.bootstrap-select {
+	width: 240px !important;
+}
+  
