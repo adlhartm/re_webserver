@@ -186,6 +186,34 @@ function findMaxGlobal(dat) {
     return d3.max(tmplst);
 };
 
+function findMaxGlobalRelative(dat) {
+    tmplst = []
+    for (var i=0; i<dat.length; i++) {
+        if (dat[i].active & dat[i].visible) {
+            mean = findMean(dat[i]);
+            sd = findDeviation(dat[i]);
+            max = d3.max(dat[i].profile, function(d) {return d.y});
+            max_rel =  (max - mean)/sd;
+            tmplst.push(max_rel);
+        };
+    };
+    return d3.max(tmplst);
+};
+
+function findMinGlobalRelative(dat) {
+    tmplst = []
+    for (var i=0; i<dat.length; i++) {
+        if (dat[i].active & dat[i].visible) {
+            mean = findMean(dat[i]);
+            sd = findDeviation(dat[i]);
+            min = d3.min(dat[i].profile, function(d) {return d.y});
+            min_rel =  (min - mean)/sd;
+            tmplst.push(min_rel);
+        };
+    };
+    return d3.max(tmplst);
+};
+
 function findMean(dat) {
     if (dat.active & dat.visible) {
         return d3.mean(dat.profile, function(d) {return d.y});
@@ -200,6 +228,21 @@ function findDeviation(dat) {
     } else {
         return null;
     };
+};
+
+function relative_to_absolute(z, dat) {
+    mean = findMean(dat);
+    sd = findDeviation(dat);
+    x = sd*z + mean;
+    return x;
+};
+
+function absolute_to_relative(x, dat) {
+    mean = findMean(dat);
+    sd = findDeviation(dat);
+    z = (x - mean)/sd;
+    return z;
+
 };
 
 function rescale(dat, type){
