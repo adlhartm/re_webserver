@@ -21,8 +21,8 @@
     <meta name="theme-color" content="#ffffff">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/interface.css">
-    <link rel="stylesheet" type="text/css" href="css/doc-interface.css"> 
+    <link rel="stylesheet" type="text/css" href="css/interface.css?v=2">
+    <link rel="stylesheet" type="text/css" href="css/doc-interface.css?v=2">
     <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.0/dist/bootstrap-toc.min.css">
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -102,71 +102,71 @@
                 <h3 class="text-center">Comparing two hydrophobicity scales</h3>
                 <h4>Step 1 </h4>
                 <p>When starting an analysis, the user is greeted with a nearly empty page showing a single button, asking the user to run an analysis. Clicking this button opens up the Settings menu to start defining a sequence and the parameters for analysis.</p>
-                <img class="tutorial-img" src="img/tutorial/step0001.png">
+                <img class="tutorial-img" src="img/tutorial/step0001.png?v=2">
                 <h4 >Step 2</h4>
                 <p>The opened Options dialogue shows several tabs that guide the user through data submission process in a meaningful order. First sequence data is defined. This is followed by the definition of the scale used and finally the visual style is set.</p>
-                <img class="tutorial-img" src="img/tutorial/step0002.png">
+                <img class="tutorial-img" src="img/tutorial/step0002.png?v=2">
                 <h4>Step 3</h4>
                 <p>Sequence information can be provided in multiple ways: the sequence can be entered directly in the textbox (as a raw string of one letter encoded amino acids or bases, or FASTA formatted), or it can be retrieved by using the ID of a public sequence database. For this example, the latter option is chosen. First, the type of polymer is defined - in this case a protein sequence.</p>
-                <img class="tutorial-img" src="img/tutorial/step0003.png">
+                <img class="tutorial-img" src="img/tutorial/step0003.png?v=2">
                 <h4>Step 4</h4>
                 <p>Selecting a molecule type automatically selects the corresponding database, that is available for sequence download. Two large public sequence databases are supported currently: the Uniprot<sup><a href="https://www.uniprot.org/">1</a></sup> for proteins and the European Nucleotide Archive (ENA)<sup><a href="https://www.ebi.ac.uk/ena">2</a></sup> for RNA/DNA sequences. This tutorial example, uses a protein sequence deposited in the Uniprot database.</p>
-                <img class="tutorial-img" src="img/tutorial/step0004.png">
+                <img class="tutorial-img" src="img/tutorial/step0004.png?v=2">
                 <h4>Step 5</h4>
                 <p>To access a deposited sequence, the ID is simply inserted into the input field provided and the <i>Go</i> button to the right is clicked.</p>
-                <img class="tutorial-img" src="img/tutorial/step0005.png">
+                <img class="tutorial-img" src="img/tutorial/step0005.png?v=2">
                 <h4>Step 6</h4>
                 <p>Once a sequence ID is submitted, the data is automatically retrieved from the specified server. The sequence itself is inserted in the text-editor that allows for further modification of the sequence and a success message is displayed mentioning the name of the protein sequence. The <i>Clear</i> button to the left of the <i>Done</i> button allows for deletion of all specified data.</p>
-                <img class="tutorial-img" src="img/tutorial/step0006.png">
+                <img class="tutorial-img" src="img/tutorial/step0006.png?v=2">
                 <h4>Step 7</h4>
                 <p>Once the sequence is loaded, the first step is done. Next a property of interest needs to be selected. To do this the <i>Scale</i> tab is clicked.</p>
-                <img class="tutorial-img" src="img/tutorial/step0007.png">
+                <img class="tutorial-img" src="img/tutorial/step0007.png?v=2">
                 <h4>Step 8</h4>
                 <p>Within the <i>Scale</i> tab a dropdown-menu is found that allows to prefilter the scales in a coarse way. This is necessary since over 600 different property scales are supplied with the tool. In our case, we want to compare the hydrophobic pattern as defined by two different scales and, therefore, only the <i>Hydrophobicity</i> option is selected. This filter allows for multiple classes to be selected.</p>
-                <img class="tutorial-img" src="img/tutorial/step0008.png">
+                <img class="tutorial-img" src="img/tutorial/step0008.png?v=2">
                 <h4>Step 9</h4>
                 <p>Once one or more classes are selected, the menu gets populated with all scales fitting the selected class(es). They are listed using their AAindex ID<sup><a href="https://www.genome.jp/aaindex/">3</a></sup> if available or a descriptive name otherwise. First, a very popular scale, the <i>Kyte-Doolittle Hydropathy index</i>, is selected. Immediately, the data on the right gets updated showing the name, a link to the AAindex (if applicable), the numerical entries of the scale, a short description and a citation for the original publication, including a link to the Pubmed if available.<sup><a href="https://www.ncbi.nlm.nih.gov/pubmed/">4</a></sup></p>
-                <img class="tutorial-img" src="img/tutorial/step0009.png">
+                <img class="tutorial-img" src="img/tutorial/step0009.png?v=2">
                 <h4>Step 10</h4>
                 <p>For now, the visual parameters are kept at their default values and the resulting profile is investigated. To do that, the pop-up is  closed by clicking the <i>Done</i> button on the bottom right. A distinct hydrophobic profile can be observed showing positive values at the N-terminus of the sequence and the most negative region closer towards the C-terminus of the protein.</p>
-                <img class="tutorial-img" src="img/tutorial/step0010.png">
+                <img class="tutorial-img" src="img/tutorial/step0010.png?v=2">
                 <h4>Step 11</h4>
                 <p>To be able to compare two different scales, the same sequence is added a second time using the <i>Add additional sequence</i> button. Steps 2 to 8 are repeated again using the Uniprot ID  <i>P16043</i> to download the sequence of Somatoliberin from the Uniprot database.</p>
-                <img class="tutorial-img" src="img/tutorial/step0011.png">
+                <img class="tutorial-img" src="img/tutorial/step0011.png?v=2">
                 <h4>Step 12</h4>
                 <p>This time another well-known hydrophobicity scale is used: the <i>Consensus normalized hydrophobicity</i> scale by Eisenberg et. al. Already at this step a difference in absolute values between the two scales can be observed in the description of the scale.</p>
-                <img class="tutorial-img" src="img/tutorial/step0012.png">
+                <img class="tutorial-img" src="img/tutorial/step0012.png?v=2">
                 <h4>Step 13</h4>
                 <p>Once the second dataset is defined, the resulting plot can be investigated. While the profiles suggest little similarity, the pairwise Pearson correlation coefficient R between them is 0.98, suggesting a very high correlation. This can happen if two scales are reporting their properties in correlated, but largely different units.</p>
-                <img class="tutorial-img" src="img/tutorial/step0013.png">
+                <img class="tutorial-img" src="img/tutorial/step0013.png?v=2">
                 <h4>Step 14</h4>
                 <p>To test whether the difference between the two curves can be purely attributed to differences in units used by the scale authors, we can normalize the profiles by their standard deviation. To do so, we click the <i>Settings</i> button in the top menu bar.</p>
-                <img class="tutorial-img" src="img/tutorial/step0014.png">
+                <img class="tutorial-img" src="img/tutorial/step0014.png?v=2">
                 <h4>Step 15</h4>
                 <p>In the settings menu the <i>Relative Units</i> switch is flipped to on, this recalculates the profiles and reports them in units of their own standard deviation. The other options allows one to invert the y-axes, which can be useful if one compares properties that are reported in inverted units.</p>
-                <img class="tutorial-img" src="img/tutorial/step0015.png">
+                <img class="tutorial-img" src="img/tutorial/step0015.png?v=2">
                 <h4>Step 16</h4>
                 <p>Once the settings menu is closed, the similarities between the two profiles for Somatoliberin using two different hydrophobicity metrics are obvious. The differences between the two scales used seem to be very local in nature with the global shape staying intact.</p>
-                <img class="tutorial-img" src="img/tutorial/step0016.png">
+                <img class="tutorial-img" src="img/tutorial/step0016.png?v=2">
                 <p>This example illustrates a simple task performed using VOLPES, of course VOLPES can do much more than what is described above, but this should be enough to get you started!</p>
                 
                 
                 <h3 class="text-center">Aligning alternative splicing variants</h3>
                 <h4>Step 1</h4>
                 <p>We start by adding the first protein sequence <i>Armadillo repeat-containing protein 10</i> using the Uniprot ID Q8N2F6-1. Note that the "-1" indicates a splicing isoform, in this case we selected the canonical sequence.</p>
-                <img class="tutorial-img" src="img/tutorial/step0101.png">
+                <img class="tutorial-img" src="img/tutorial/step0101.png?v=2">
                 <h4>Step 2</h4>
                 <p>For this example we want to compare the variants based on hydrophobicity - therefore we choose the <i>FAC1</i> scale. Factor 1 is a consensus hydrophobicity scale derived by multivariate statistical analysis of a set of 500 different property scales.</p>
-                <img class="tutorial-img" src="img/tutorial/step0102.png">
+                <img class="tutorial-img" src="img/tutorial/step0102.png?v=2">
                 <h4>Step 3</h4>
                 <p>Next we add a splicing variant using the Uniprot ID Q8N2F6-2. To do this we repeat steps 1-2 using the second ID. This time we want to make sure the alternative sequence stands out in the plot. To achieve that we switch to the <i>Visuals</i> tab and change the linetype to a style of our choice, in this example: <i>Dashed 2</i>. In addition to the linetype and thickness, in this tab the minimum percentage of values that have to be present in an averaging window can be adjusted. For details on this parameter, see <a href="documentation.html#treatment-of-gaps-in-the-sequence"> <i>Documentation</i></a>.</p>
-                <img class="tutorial-img" src="img/tutorial/step0103.png">
+                <img class="tutorial-img" src="img/tutorial/step0103.png?v=2">
                 <h4>Step 4</h4>
                 <p>The similarity between the two sequences is not immediately obvious, neither by the plot nor by the Pearson or Spearman correlation coefficients displayed in the lower right tab.</p>
-                <img class="tutorial-img" src="img/tutorial/step0104.png">
+                <img class="tutorial-img" src="img/tutorial/step0104.png?v=2">
                 <h4>Step 5</h4>
                 <p>To make sure that we are not missing anything we start sliding the profiles against each other by using the <i>Shift</i> slider of the second sequence. To fine tune the shift the + and - buttons next to slider can also be used. When reaching an offset of 35 residues the similarity between the two variants becomes very obvious. A look at the correlation tab confirms that these sequences are highly similar.</p>
-                <img class="tutorial-img" src="img/tutorial/step0105.png">
+                <img class="tutorial-img" src="img/tutorial/step0105.png?v=2">
                 <p>Using the tools provided by VOLPES we could quickly and easily find the overlapping regions for these two splicing isoforms.</p>
             </div>
         </div>

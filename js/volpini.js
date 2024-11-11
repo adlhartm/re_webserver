@@ -239,10 +239,15 @@ function drawingProfiles(data, id = ".canvas") {
         }
     }
 
+    if (data.relative) {
+        rescale(data.seq, 'protein');
+        rescale(data.seq, 'rna');
+        rescale(data.seq, 'dna');
+    }
+
     if (input.seq.map(function(d) {return d["type"]}).includes("protein")) {
 
         if (data.relative) {
-            rescale(data.seq, 'protein');
 
             var y1_min = findMinGlobal(data.seq);
             var y1_max = findMaxGlobal(data.seq);
@@ -302,9 +307,6 @@ function drawingProfiles(data, id = ".canvas") {
     if (input.seq.map(function(d) {return d["type"]}).includes("rna") || input.seq.map(function(d) {return d["type"]}).includes("dna")) {
 
         if (data.relative) {
-            rescale(data.seq, 'rna');
-            rescale(data.seq, 'dna');
-
             var y2_min = findMinGlobal(input.seq);
             var y2_max = findMaxGlobal(input.seq);
             if (Math.abs(y2_min) >= Math.abs(y2_max)) {
