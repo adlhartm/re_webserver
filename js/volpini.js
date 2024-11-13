@@ -179,8 +179,6 @@ function drawingProfiles(data, id = ".canvas") {
     var n_protein = 0;
     var n_nucleic_acid = 0;
     if (input.seq.length == 2 && data.relative == false ){
-        
-
         for (var i = 0; i < 2; i++) {
             if (input.seq[i].type == "protein"){
                 n_protein += 1;
@@ -202,7 +200,7 @@ function drawingProfiles(data, id = ".canvas") {
             zscore_scaling = true
 
             if (data.y1_reverse != data.y2_reverse) {
-                
+
                 var y_min_zscore = d3.min([protein_min, -rna_max])
                 var y_max_zscore = d3.max([protein_max, -rna_min])
                 
@@ -211,10 +209,10 @@ function drawingProfiles(data, id = ".canvas") {
                 var y_max_zscore = d3.max([protein_max, rna_max])
 
             }
-
-
         } 
     }
+
+
 
     d3.selectAll("svg > *").remove();
     d3.selectAll("#SVGholder > div").remove();
@@ -286,18 +284,21 @@ function drawingProfiles(data, id = ".canvas") {
         rescale(data.seq, 'protein');
         rescale(data.seq, 'rna');
         rescale(data.seq, 'dna');
-    }
+
+    };
 
     if (input.seq.map(function(d) {return d["type"]}).includes("protein")) {
 
         if (data.relative) {
 
-            var y1_min = findMinGlobal(data.seq);
-            var y1_max = findMaxGlobal(data.seq);
-            if (Math.abs(y1_min) >= Math.abs(y1_max)) {
-                y1_max = y1_min*(-1)
+            if (data.y1_reverse != data.y2_reverse) {
+                var y1_min = d3.min([findMin(input.seq, "protein"), -d3.max([findMax(input.seq, "rna"), findMax(input.seq, "dna")])])
+                var y1_max = d3.max([findMax(input.seq, "protein"), -d3.min([findMin(input.seq, "rna"), findMin(input.seq, "dna")])])
+                
             } else {
-                y1_min = y1_max*(-1)
+                var y1_min = d3.min([findMin(input.seq, "protein"), d3.min([findMin(input.seq, "rna"), findMin(input.seq, "dna")])])
+                var y1_max = d3.max([findMax(input.seq, "protein"), d3.max([findMax(input.seq, "rna"), findMax(input.seq, "dna")])])
+
             };
 
 
@@ -356,13 +357,17 @@ function drawingProfiles(data, id = ".canvas") {
     if (input.seq.map(function(d) {return d["type"]}).includes("rna") || input.seq.map(function(d) {return d["type"]}).includes("dna")) {
 
         if (data.relative) {
-            var y2_min = findMinGlobal(input.seq);
-            var y2_max = findMaxGlobal(input.seq);
-            if (Math.abs(y2_min) >= Math.abs(y2_max)) {
-                y2_max = y2_min*(-1)
+
+            if (data.y1_reverse != data.y2_reverse) {
+                var y2_max = -d3.min([findMin(input.seq, "protein"), -d3.max([findMax(input.seq, "rna"), findMax(input.seq, "dna")])])
+                var y2_min = -d3.max([findMax(input.seq, "protein"), -d3.min([findMin(input.seq, "rna"), findMin(input.seq, "dna")])])
+                
             } else {
-                y2_min = y2_max*(-1)
+                var y2_min = d3.min([findMin(input.seq, "protein"), d3.min([findMin(input.seq, "rna"), findMin(input.seq, "dna")])])
+                var y2_max = d3.max([findMax(input.seq, "protein"), d3.max([findMax(input.seq, "rna"), findMax(input.seq, "dna")])])
+
             };
+
         } else {
 
             if (zscore_scaling){
